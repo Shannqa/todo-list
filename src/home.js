@@ -13,6 +13,12 @@ const elements = [
 
 export default function createDom() {
   const body = document.querySelector("body");
+
+  const header = document.createElement("div");
+  header.classList.add("header");
+  header.textContent = "To Do List";
+  body.appendChild(header);
+
   const main = document.createElement("div");
   const modalWind = document.createElement("div");
 

@@ -47,7 +47,7 @@ const defTodo = new Todo(
   "brush your teeth",
   "now",
   "high",
-  "on",
+  "off",
   "no",
   "life"
 );
