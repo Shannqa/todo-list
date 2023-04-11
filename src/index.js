@@ -1,7 +1,7 @@
-import createDom, { renderTodos } from "./home";
+import createDom, { renderTodos, closeModal } from "./home";
 import "./style.css";
 const kitty = "kitty";
-export { openTodos, kitty };
+export { openTodos, kitty, addTodo };
 
 class Todo {
   constructor(
@@ -38,6 +38,7 @@ function addTodo(event) {
   );
   openTodos.push(newTodo);
   renderTodos();
+  closeModal();
   console.log(openTodos);
   event.preventDefault();
 }
@@ -52,6 +53,3 @@ const defTodo = new Todo(
 );
 openTodos.push(defTodo);
 createDom();
-
-const submit = document.querySelector("#submit");
-submit.addEventListener("click", addTodo);
