@@ -2,13 +2,13 @@ import { formatDuration } from "date-fns";
 import { openTodos, kitty, addTodo } from ".";
 
 const elements = [
-  "title",
-  "description",
-  "dueDate",
-  "priority",
-  "checklist",
-  "notes",
-  "project",
+  { short: "title", full: "Title" },
+  { short: "description", full: "Description" },
+  { short: "dueDate", full: "Due date" },
+  { short: "priority", full: "Priority" },
+  { short: "checklist", full: "Done?" },
+  { short: "notes", full: "Notes" },
+  { short: "project", full: "Project" },
 ];
 
 export default function createDom() {
@@ -29,13 +29,13 @@ export default function createDom() {
 
   elements.forEach((item) => {
     const input = document.createElement("input");
-    input.setAttribute("id", `${item}`);
+    input.setAttribute("id", `${item.short}`);
     if (item === "checklist") {
       input.setAttribute("type", "checkbox");
     }
     const label = document.createElement("label");
-    label.setAttribute("for", `${item}`);
-    label.textContent = `${item}`;
+    label.setAttribute("for", `${item.short}`);
+    label.textContent = `${item.full}`;
     form.appendChild(label);
     form.appendChild(input);
   });
@@ -89,7 +89,7 @@ function renderTodos() {
   const tr = document.createElement("tr");
   elements.forEach((item) => {
     const th = document.createElement("th");
-    th.textContent = `${item}`;
+    th.textContent = `${item.full}`;
     tr.appendChild(th);
   });
   table.appendChild(tr);
