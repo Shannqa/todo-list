@@ -10,3 +10,17 @@ input {
 button {
   width: 200px;
 }
+
+table {
+  border: 1px black solid;
+  border-collapse: collapse;
+}
+
+th {
+  border: 1px black solid;
+  padding: 3px;
+}
+td {
+  border: 1px black solid;
+  padding: 3px;
+}

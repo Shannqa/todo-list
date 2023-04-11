@@ -1,9 +1,34 @@
 import { formatDuration } from "date-fns";
+import { openTodos, kitty } from ".";
+
+const elements = [
+  "title",
+  "description",
+  "dueDate",
+  "priority",
+  "checklist",
+  "notes",
+  "project",
+];
+// class FormElem {
+//   constructor(short, full) {
+//     this.short = short;
+//     this.full = full;
+//   }
+
+// }
+// const title = new FormElem("title", "title");
+// const description = new FormElem("desc", "description");
+// const dueDate = new FormElem("desc", "description");
+// const dueDate = new FormElem("desc", "description");
+// const dueDate = new FormElem("desc", "description");
+// const dueDate = new FormElem("desc", "description");
 
 export default function createDom() {
   const body = document.querySelector("body");
   const main = document.createElement("div");
   const form = document.createElement("form");
+
   const titleField = document.createElement("input");
   const titleLabel = document.createElement("label");
   const descField = document.createElement("input");
@@ -64,5 +89,47 @@ export default function createDom() {
   form.appendChild(projField);
   form.appendChild(submitBtn);
   main.appendChild(form);
+
+  const tableDiv = document.createElement("div");
+  tableDiv.classList.add("tableDiv");
+  main.appendChild(tableDiv);
   body.appendChild(main);
+
+  renderTodos();
 }
+
+function removeTable() {
+  const tableDiv = document.querySelector(".tableDiv");
+  while (tableDiv.lastChild) {
+    tableDiv.removeChild(tableDiv.lastChild);
+  }
+}
+
+function renderTodos() {
+  const tableDiv = document.querySelector(".tableDiv");
+  removeTable();
+  const table = document.createElement("table");
+  const tr = document.createElement("tr");
+  elements.forEach((item) => {
+    const th = document.createElement("th");
+    th.textContent = `${item}`;
+    tr.appendChild(th);
+  });
+  table.appendChild(tr);
+
+  openTodos.forEach((item) => {
+    for (const prop in item) {
+      console.log(item[prop]);
+      const td = document.createElement("td");
+      td.textContent = `${item[prop]}`;
+      table.appendChild(td);
+    }
+    const tr = document.createElement("tr");
+    table.appendChild(tr);
+  });
+  console.log(openTodos);
+  console.log(kitty);
+  tableDiv.appendChild(table);
+}
+
+export { renderTodos };

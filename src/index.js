@@ -1,5 +1,7 @@
-import createDom from "./home";
+import createDom, { renderTodos } from "./home";
 import "./style.css";
+const kitty = "kitty";
+export { openTodos, kitty };
 
 class Todo {
   constructor(
@@ -35,10 +37,20 @@ function addTodo(event) {
     project.value
   );
   openTodos.push(newTodo);
+  renderTodos();
   console.log(openTodos);
   event.preventDefault();
 }
-
+const defTodo = new Todo(
+  "brush teeth",
+  "brush your teeth",
+  "now",
+  "high",
+  "on",
+  "no",
+  "life"
+);
+openTodos.push(defTodo);
 createDom();
 
 const submit = document.querySelector("#submit");
