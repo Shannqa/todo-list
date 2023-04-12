@@ -1,6 +1,6 @@
 import createDom, { renderTasks, closeModal } from "./home";
 import "./style.css";
-export { openTasks, addTask };
+export { openTasks, allTasks, finishedTasks, addTask };
 
 const openTasks = [];
 const allTasks = [];
@@ -38,9 +38,9 @@ function addTask(event) {
     project.value
   );
   openTasks.push(newTask);
+  allTasks.push(newTask);
   renderTasks();
   closeModal();
-  console.log(openTasks);
   event.preventDefault();
 }
 const defaultTask = new Task(
@@ -53,4 +53,5 @@ const defaultTask = new Task(
   "life"
 );
 openTasks.push(defaultTask);
+allTasks.push(defaultTask);
 createDom();

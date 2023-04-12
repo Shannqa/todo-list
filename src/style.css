@@ -28,6 +28,16 @@ body {
   grid-area: nav;
 }
 
+.navigation li:hover {
+  color: orange;
+  cursor: pointer;
+}
+
+.navigation li:active {
+  color: red;
+  cursor: pointer;
+}
+
 .main {
   grid-area: main;
 }

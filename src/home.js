@@ -1,6 +1,6 @@
 import { formatDuration } from "date-fns";
-import { openTasks, addTask } from ".";
-
+import { openTasks, allTasks, finishedTasks, addTask } from ".";
+export { renderTasks, closeModal };
 const elements = [
   { short: "title", full: "Title" },
   { short: "description", full: "Description" },
@@ -19,7 +19,15 @@ function createHeader() {
   header.textContent = "To Do List";
   body.appendChild(header);
 }
-
+function renderOpen() {
+  renderTasks(openTasks);
+}
+function renderAll() {
+  renderTasks(allTasks);
+}
+function renderFinished() {
+  renderTasks(finishedTasks);
+}
 function createNav() {
   const nav = document.createElement("div");
   const navUl = document.createElement("ul");
@@ -29,8 +37,11 @@ function createNav() {
 
   nav.classList.add("navigation");
   navOpen.textContent = "Open tasks";
+  navOpen.addEventListener("click", renderOpen);
   navAll.textContent = "All tasks";
+  navAll.addEventListener("click", renderAll);
   navFinished.textContent = "Finished tasks";
+  navFinished.addEventListener("click", renderFinished);
 
   nav.appendChild(navUl);
   navUl.appendChild(navOpen);
@@ -108,9 +119,18 @@ function removeTable() {
   }
 }
 
-function renderTasks() {
+function renderTasks(tasklist = openTasks) {
   const tableDiv = document.querySelector(".tableDiv");
   removeTable();
+  const tableLabel = document.createElement("div");
+  if (tasklist == allTasks) {
+    tableLabel.textContent = "All tasks";
+  } else if (tasklist == finishedTasks) {
+    tableLabel.textContent = "Finished tasks";
+  } else {
+    tableLabel.textContent = "Open tasks";
+  }
+
   const table = document.createElement("table");
   const tr = document.createElement("tr");
   elements.forEach((item) => {
@@ -120,9 +140,9 @@ function renderTasks() {
   });
   table.appendChild(tr);
 
-  openTasks.forEach((item) => {
+  tasklist.forEach((item) => {
     for (const prop in item) {
-      console.log(item[prop]);
+      // console.log(item[prop]);
       const td = document.createElement("td");
       td.textContent = `${item[prop]}`;
       table.appendChild(td);
@@ -130,8 +150,6 @@ function renderTasks() {
     const tr = document.createElement("tr");
     table.appendChild(tr);
   });
-  console.log(openTasks);
+  tableDiv.appendChild(tableLabel);
   tableDiv.appendChild(table);
 }
-
-export { renderTasks, closeModal };
