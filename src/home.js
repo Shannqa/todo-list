@@ -11,13 +11,39 @@ const elements = [
   { short: "project", full: "Project" },
 ];
 
-export default function createDom() {
-  const body = document.querySelector("body");
+const body = document.querySelector("body");
 
+function createHeader() {
   const header = document.createElement("div");
   header.classList.add("header");
   header.textContent = "To Do List";
   body.appendChild(header);
+}
+
+function createNav() {
+  const nav = document.createElement("div");
+  const navUl = document.createElement("ul");
+  const navOpen = document.createElement("li");
+  const navAll = document.createElement("li");
+  const navFinished = document.createElement("li");
+
+  nav.classList.add("navigation");
+  navOpen.textContent = "Open tasks";
+  navAll.textContent = "All tasks";
+  navFinished.textContent = "Finished tasks";
+
+  nav.appendChild(navUl);
+  navUl.appendChild(navOpen);
+  navUl.appendChild(navAll);
+  navUl.appendChild(navFinished);
+  body.appendChild(nav);
+}
+
+export default function createDom() {
+  createHeader();
+  createNav();
+
+  /* Main */
 
   const main = document.createElement("div");
   const modalWind = document.createElement("div");
