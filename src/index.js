@@ -1,9 +1,12 @@
-import createDom, { renderTodos, closeModal } from "./home";
+import createDom, { renderTasks, closeModal } from "./home";
 import "./style.css";
-const kitty = "kitty";
-export { openTodos, kitty, addTodo };
+export { openTasks, addTask };
 
-class Todo {
+const openTasks = [];
+const allTasks = [];
+const finishedTasks = [];
+
+class Task {
   constructor(
     title,
     description,
@@ -23,11 +26,9 @@ class Todo {
   }
 }
 
-const openTodos = [];
-
-function addTodo(event) {
+function addTask(event) {
   const form = document.querySelector("#form");
-  let newTodo = new Todo(
+  let newTask = new Task(
     title.value,
     description.value,
     dueDate.value,
@@ -36,13 +37,13 @@ function addTodo(event) {
     notes.value,
     project.value
   );
-  openTodos.push(newTodo);
-  renderTodos();
+  openTasks.push(newTask);
+  renderTasks();
   closeModal();
-  console.log(openTodos);
+  console.log(openTasks);
   event.preventDefault();
 }
-const defTodo = new Todo(
+const defaultTask = new Task(
   "brush teeth",
   "brush your teeth",
   "now",
@@ -51,5 +52,5 @@ const defTodo = new Todo(
   "no",
   "life"
 );
-openTodos.push(defTodo);
+openTasks.push(defaultTask);
 createDom();

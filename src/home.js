@@ -1,5 +1,5 @@
 import { formatDuration } from "date-fns";
-import { openTodos, kitty, addTodo } from ".";
+import { openTasks, addTask } from ".";
 
 const elements = [
   { short: "title", full: "Title" },
@@ -67,7 +67,7 @@ export default function createDom() {
   });
 
   const submitBtn = document.createElement("button");
-  submitBtn.addEventListener("click", addTodo);
+  submitBtn.addEventListener("click", addTask);
   submitBtn.setAttribute("id", "submit");
   submitBtn.textContent = "Submit";
   form.appendChild(submitBtn);
@@ -93,7 +93,7 @@ export default function createDom() {
   main.appendChild(addTaskBtn);
   main.appendChild(tableDiv);
   body.appendChild(main);
-  renderTodos();
+  renderTasks();
 }
 
 function closeModal() {
@@ -108,7 +108,7 @@ function removeTable() {
   }
 }
 
-function renderTodos() {
+function renderTasks() {
   const tableDiv = document.querySelector(".tableDiv");
   removeTable();
   const table = document.createElement("table");
@@ -120,7 +120,7 @@ function renderTodos() {
   });
   table.appendChild(tr);
 
-  openTodos.forEach((item) => {
+  openTasks.forEach((item) => {
     for (const prop in item) {
       console.log(item[prop]);
       const td = document.createElement("td");
@@ -130,9 +130,8 @@ function renderTodos() {
     const tr = document.createElement("tr");
     table.appendChild(tr);
   });
-  console.log(openTodos);
-  console.log(kitty);
+  console.log(openTasks);
   tableDiv.appendChild(table);
 }
 
-export { renderTodos, closeModal };
+export { renderTasks, closeModal };
