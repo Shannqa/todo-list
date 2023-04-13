@@ -1,10 +1,11 @@
 import createDom, { renderTasks, closeModal } from "./home";
 import "./style.css";
-export { openTasks, allTasks, finishedTasks, addTask };
+export { openTasks, allTasks, finishedTasks, projects, addTask };
 
 const openTasks = [];
 const allTasks = [];
 const finishedTasks = [];
+const projects = [];
 
 class Task {
   constructor(
@@ -26,6 +27,13 @@ class Task {
   }
 }
 
+class Project {
+  constructor(name) {
+    this.name = name;
+    projects.push(this);
+  }
+}
+
 function addTask(event) {
   const form = document.querySelector("#form");
   let newTask = new Task(
@@ -37,6 +45,7 @@ function addTask(event) {
     notes.value,
     project.value
   );
+
   openTasks.push(newTask);
   allTasks.push(newTask);
   renderTasks();
@@ -52,6 +61,8 @@ const defaultTask = new Task(
   "no",
   "life"
 );
+
+const defaultProject = new Project("Work");
 openTasks.push(defaultTask);
 allTasks.push(defaultTask);
 createDom();

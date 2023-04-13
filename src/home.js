@@ -1,6 +1,7 @@
 import { formatDuration } from "date-fns";
-import { openTasks, allTasks, finishedTasks, addTask } from ".";
+import { openTasks, allTasks, finishedTasks, projects, addTask } from ".";
 export { renderTasks, closeModal };
+
 const elements = [
   { short: "title", full: "Title" },
   { short: "description", full: "Description" },
@@ -34,6 +35,8 @@ function createNav() {
   const navOpen = document.createElement("li");
   const navAll = document.createElement("li");
   const navFinished = document.createElement("li");
+  const projectsDiv = document.createElement("div");
+  const projectsUl = document.createElement("ul");
 
   nav.classList.add("navigation");
   navOpen.textContent = "Open tasks";
@@ -43,16 +46,23 @@ function createNav() {
   navFinished.textContent = "Finished tasks";
   navFinished.addEventListener("click", renderFinished);
 
+  projectsDiv.textContent = "Projects";
+  projectsUl.classList.add("projects-nav");
+
   nav.appendChild(navUl);
   navUl.appendChild(navOpen);
   navUl.appendChild(navAll);
   navUl.appendChild(navFinished);
+  projectsDiv.appendChild(projectsUl);
+  nav.appendChild(projectsDiv);
+
   body.appendChild(nav);
 }
 
 export default function createDom() {
   createHeader();
   createNav();
+  renderProjNav();
 
   /* Main */
 
@@ -152,4 +162,13 @@ function renderTasks(tasklist = openTasks) {
   });
   tableDiv.appendChild(tableLabel);
   tableDiv.appendChild(table);
+}
+
+function renderProjNav() {
+  const ul = document.querySelector(".projects-nav");
+  projects.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.name}`;
+    ul.appendChild(li);
+  });
 }
