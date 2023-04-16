@@ -1,3 +1,5 @@
+// git subtree push --prefix dist origin gh-pages
+
 import createDom, { renderTasks, closeModal } from "./home";
 import "./style.css";
 export { openTasks, allTasks, finishedTasks, projects, addTask };
