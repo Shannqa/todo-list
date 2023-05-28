@@ -67,6 +67,8 @@ export default function createDom() {
   /* Main */
 
   const main = document.createElement("div");
+
+  /* Modal window for creating a new task */
   const modalWind = document.createElement("div");
 
   const form = document.createElement("form");
@@ -77,7 +79,11 @@ export default function createDom() {
   elements.forEach((item) => {
     const input = document.createElement("input");
     input.setAttribute("id", `${item.short}`);
-    if (item === "checklist") {
+    if (item.short === "checklist") {
+      input.setAttribute("type", "checkbox");
+      input.setAttribute("value", "done");
+    }
+    if (item.short === "priority") {
       input.setAttribute("type", "checkbox");
     }
     const label = document.createElement("label");
@@ -122,6 +128,7 @@ function closeModal() {
   modal.style.display = "none";
 }
 
+/* */
 function removeTable() {
   const tableDiv = document.querySelector(".tableDiv");
   while (tableDiv.lastChild) {
@@ -154,7 +161,20 @@ function renderTasks(tasklist = openTasks) {
     for (const prop in item) {
       // console.log(item[prop]);
       const td = document.createElement("td");
-      td.textContent = `${item[prop]}`;
+      if (prop === "checklist") {
+        const doneCheck = document.createElement("input");
+        doneCheck.setAttribute("type", "checkbox");
+        console.log(item[prop]);
+        if (item[prop] === "true" || item[prop] === true) {
+          doneCheck.checked = true;
+        } else {
+          doneCheck.checked = false;
+        }
+        td.appendChild(doneCheck);
+      } else {
+        td.textContent = `${item[prop]}`;
+      }
+
       table.appendChild(td);
     }
     const tr = document.createElement("tr");

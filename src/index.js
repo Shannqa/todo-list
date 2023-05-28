@@ -38,16 +38,19 @@ class Project {
 
 function addTask(event) {
   const form = document.querySelector("#form");
+    const check = document.querySelector("#checklist");
   let newTask = new Task(
     title.value,
     description.value,
     dueDate.value,
     priority.value,
-    checklist.value,
+    check.checked,
     notes.value,
     project.value
   );
 
+
+  console.log(newTask);
   openTasks.push(newTask);
   allTasks.push(newTask);
   renderTasks();
@@ -59,7 +62,7 @@ const defaultTask = new Task(
   "brush your teeth",
   "now",
   "high",
-  "off",
+  "true",
   "no",
   "life"
 );
