@@ -77,21 +77,41 @@ export default function createDom() {
   modalWind.classList.add("modal");
 
   elements.forEach((item) => {
+    if (item.short === "priority") {
+    const select = document.createElement("select");
+    const option1 = document.createElement("option");
+    const option2 = document.createElement("option");
+    const option3 = document.createElement("option");
+    option1.value = "High";
+    option1.textContent = "High";
+    option2.value = "Medium";
+    option2.textContent = "Medium";
+    option3.value = "Low";
+    option3.textContent = "Low";
+    select.appendChild(option1);  
+    select.appendChild(option2);  
+    select.appendChild(option3);  
+    const label = document.createElement("label");
+    label.setAttribute("for", `${item.short}`);
+    label.textContent = `${item.full}`;
+    form.appendChild(label);
+    form.appendChild(select);
+    } else {
+
     const input = document.createElement("input");
     input.setAttribute("id", `${item.short}`);
     if (item.short === "checklist") {
       input.setAttribute("type", "checkbox");
       input.setAttribute("value", "done");
     }
-    if (item.short === "priority") {
-      input.setAttribute("type", "checkbox");
-    }
+
     const label = document.createElement("label");
     label.setAttribute("for", `${item.short}`);
     label.textContent = `${item.full}`;
     form.appendChild(label);
     form.appendChild(input);
-  });
+  }});
+
 
   const submitBtn = document.createElement("button");
   submitBtn.addEventListener("click", addTask);
@@ -173,13 +193,28 @@ function renderTasks(tasklist = openTasks) {
             }
 
           });
-        console.log(item[prop]);
         if (item[prop] === "true" || item[prop] === true) {
           doneCheck.checked = true;
         } else {
           doneCheck.checked = false;
         }
         td.appendChild(doneCheck);
+      } else if (prop === "priority") {
+          const select = document.createElement("select");
+          const option1 = document.createElement("option");
+          const option2 = document.createElement("option");
+          const option3 = document.createElement("option");
+          option1.value = "High";
+          option1.textContent = "High";
+          option2.value = "Medium";
+          option2.textContent = "Medium";
+          option3.value = "Low";
+          option3.textContent = "Low";
+          select.appendChild(option1);  
+          select.appendChild(option2);  
+          select.appendChild(option3);  
+          td.appendChild(select);
+ 
       } else {
         td.textContent = `${item[prop]}`;
       }
