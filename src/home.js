@@ -164,6 +164,15 @@ function renderTasks(tasklist = openTasks) {
       if (prop === "checklist") {
         const doneCheck = document.createElement("input");
         doneCheck.setAttribute("type", "checkbox");
+        doneCheck.setAttribute("class", "donebox");
+        doneCheck.addEventListener("click", function changeDoneState() {
+            if (this.checked) {
+              item[prop] = "true";
+            } else {
+              item[prop] = "false";
+            }
+
+          });
         console.log(item[prop]);
         if (item[prop] === "true" || item[prop] === true) {
           doneCheck.checked = true;
@@ -192,3 +201,5 @@ function renderProjNav() {
     ul.appendChild(li);
   });
 }
+
+
