@@ -2,12 +2,13 @@
 
 import createDom, { renderTasks, closeModal } from "./home";
 import "./style.css";
-export { openTasks, allTasks, finishedTasks, projects, addTask };
+export { openTasks, allTasks, finishedTasks, projects, priorities, addTask };
 
 const openTasks = [];
 const allTasks = [];
 const finishedTasks = [];
 const projects = [];
+const priorities = ["High", "Medium", "Low"];
 
 class Task {
   constructor(

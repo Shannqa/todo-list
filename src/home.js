@@ -1,5 +1,5 @@
 import { formatDuration } from "date-fns";
-import { openTasks, allTasks, finishedTasks, projects, addTask } from ".";
+import { openTasks, allTasks, finishedTasks, projects, priorities, addTask } from ".";
 export { renderTasks, closeModal };
 
 const elements = [
@@ -79,22 +79,17 @@ export default function createDom() {
   elements.forEach((item) => {
     if (item.short === "priority") {
     const select = document.createElement("select");
-    const option1 = document.createElement("option");
-    const option2 = document.createElement("option");
-    const option3 = document.createElement("option");
-    option1.value = "High";
-    option1.textContent = "High";
-    option2.value = "Medium";
-    option2.textContent = "Medium";
-    option3.value = "Low";
-    option3.textContent = "Low";
-    select.appendChild(option1);  
-    select.appendChild(option2);  
-    select.appendChild(option3);  
+    priorities.forEach ((priority) => {
+      let option = document.createElement("option");
+      option.value = priority;
+      option.textContent = priority;
+      select.appendChild(option);
+    });
     const label = document.createElement("label");
     label.setAttribute("for", `${item.short}`);
     label.textContent = `${item.full}`;
     form.appendChild(label);
+
     form.appendChild(select);
     } else {
 
@@ -201,18 +196,12 @@ function renderTasks(tasklist = openTasks) {
         td.appendChild(doneCheck);
       } else if (prop === "priority") {
           const select = document.createElement("select");
-          const option1 = document.createElement("option");
-          const option2 = document.createElement("option");
-          const option3 = document.createElement("option");
-          option1.value = "High";
-          option1.textContent = "High";
-          option2.value = "Medium";
-          option2.textContent = "Medium";
-          option3.value = "Low";
-          option3.textContent = "Low";
-          select.appendChild(option1);  
-          select.appendChild(option2);  
-          select.appendChild(option3);  
+          priorities.forEach ((priority) => {
+            let option = document.createElement("option");
+            option.value = priority;
+            option.textContent = priority;
+            select.appendChild(option);
+          });
           td.appendChild(select);
  
       } else {
