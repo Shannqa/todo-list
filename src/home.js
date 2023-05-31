@@ -70,6 +70,11 @@ export default function createDom() {
 
   /* Modal window for creating a new task */
   const modalWind = document.createElement("div");
+  
+  const closeBtn = document.createElement("button");
+  closeBtn.classList.add("close-btn");
+  closeBtn.addEventListener("click", closeModal);
+  modalWind.appendChild(closeBtn);
 
   const form = document.createElement("form");
   main.classList.add("main");
@@ -116,10 +121,7 @@ export default function createDom() {
   form.appendChild(submitBtn);
 
   modalWind.appendChild(form);
-  const closeBtn = document.createElement("button");
-  closeBtn.classList.add("close-btn");
-  closeBtn.addEventListener("click", closeModal);
-  modalWind.appendChild(closeBtn);
+
   body.appendChild(modalWind);
 
   const tableDiv = document.createElement("div");
