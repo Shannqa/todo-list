@@ -79,10 +79,11 @@ export default function createDom() {
   elements.forEach((item) => {
     if (item.short === "priority") {
     const select = document.createElement("select");
-    priorities.forEach ((priority) => {
+    select.setAttribute("id", `${item.short}`);
+    priorities.forEach ((elem) => {
       let option = document.createElement("option");
-      option.value = priority;
-      option.textContent = priority;
+      option.value = elem;
+      option.textContent = elem;
       select.appendChild(option);
     });
     const label = document.createElement("label");
@@ -194,15 +195,15 @@ function renderTasks(tasklist = openTasks) {
           doneCheck.checked = false;
         }
         td.appendChild(doneCheck);
-      } else if (prop === "priority") {
-          const select = document.createElement("select");
-          priorities.forEach ((priority) => {
-            let option = document.createElement("option");
-            option.value = priority;
-            option.textContent = priority;
-            select.appendChild(option);
-          });
-          td.appendChild(select);
+      // } else if (prop === "priority") {
+      //     const select = document.createElement("select");
+      //     priorities.forEach ((elem) => {
+      //       let option = document.createElement("option");
+      //       option.value = elem;
+      //       option.textContent = elem;
+      //       select.appendChild(option);
+      //     });
+      //     td.appendChild(select);
  
       } else {
         td.textContent = `${item[prop]}`;
