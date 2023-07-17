@@ -30,16 +30,42 @@ class Task {
   }
 }
 
+/* Projects */
 class Project {
   constructor(name) {
-    this.name = name;
+    this._name = name; 
+    this._id = getID();
+    this._taskList = [];
     projects.push(this);
   }
+  get name() {
+    return this._name;
+  }
+  set name(value) {
+    if (value) {
+    this._name = value;
+    }
+  }
+  get taskList() {
+    return this._taskList;
+  }
+  set taskList(value) {
+    this._taskList.push(value);
+  }
+
+}
+
+function getID() {
+  let randomNum = () => {
+    return Math.floor((1 + Math.random())* 0x10000).toString(16).substring(1);
+  };
+  let randomID = randomNum() + randomNum() + randomNum() + randomNum();
+  return randomID;
 }
 
 function addTask(event) {
   const form = document.querySelector("#form");
-    const check = document.querySelector("#checklist");
+  const check = document.querySelector("#checklist");
   let newTask = new Task(
     title.value,
     description.value,
@@ -49,8 +75,6 @@ function addTask(event) {
     notes.value,
     project.value
   );
-
-
   console.log(newTask);
   openTasks.push(newTask);
   allTasks.push(newTask);
@@ -58,6 +82,15 @@ function addTask(event) {
   closeModal();
   event.preventDefault();
 }
+
+function addProject(name) {
+  let newProject = new Project(name);
+}
+
+const defaultProject = new Project("Default");
+const workProject = new Project("Work");
+addProject("Bob");
+
 const defaultTask = new Task(
   "brush teeth",
   "brush your teeth",
@@ -65,11 +98,9 @@ const defaultTask = new Task(
   "high",
   "true",
   "no",
-  "life"
+  "Default"
 );
 
-const defaultProject = new Project("Default");
-const workProject = new Project("Work");
 openTasks.push(defaultTask);
 allTasks.push(defaultTask);
 createDom();
