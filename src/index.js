@@ -68,7 +68,8 @@ const defaultTask = new Task(
   "life"
 );
 
-const defaultProject = new Project("Work");
+const defaultProject = new Project("Default");
+const workProject = new Project("Work");
 openTasks.push(defaultTask);
 allTasks.push(defaultTask);
 createDom();

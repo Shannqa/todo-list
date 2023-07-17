@@ -97,6 +97,22 @@ export default function createDom() {
     form.appendChild(label);
 
     form.appendChild(select);
+
+    } else if (item.short === "project") {
+      const selectProject = document.createElement("select");
+      selectProject.setAttribute("id", `${item.short}`);
+      projects.forEach ((elem) => {
+      let projOption = document.createElement("option");
+      projOption.value = elem.name;
+      projOption.textContent = elem.name
+      selectProject.appendChild(projOption);
+    });
+    const label = document.createElement("label");
+    label.setAttribute("for", `${item.short}`);
+    label.textContent = `${item.full}`;
+    form.appendChild(label);
+
+    form.appendChild(selectProject);
     } else {
 
     const input = document.createElement("input");
