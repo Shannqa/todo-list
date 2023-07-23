@@ -162,7 +162,7 @@ function closeModal() {
   modal.style.display = "none";
 }
 
-/* */
+/* List of tasks */
 function removeTable() {
   const tableDiv = document.querySelector(".tableDiv");
   while (tableDiv.lastChild) {
@@ -183,57 +183,35 @@ function renderTasks(tasklist = openTasks) {
   }
 
   const table = document.createElement("table");
-  const tr = document.createElement("tr");
-  elements.forEach((item) => {
-    const th = document.createElement("th");
-    th.textContent = `${item.full}`;
-    tr.appendChild(th);
-  });
-  table.appendChild(tr);
-
+  
   tasklist.forEach((item) => {
-    for (const prop in item) {
-      // console.log(item[prop]);
-      const td = document.createElement("td");
-      if (prop === "checklist") {
-        const doneCheck = document.createElement("input");
-        doneCheck.setAttribute("type", "checkbox");
-        doneCheck.setAttribute("class", "donebox");
-        doneCheck.addEventListener("click", function changeDoneState() {
-            if (this.checked) {
-              item[prop] = "true";
-            } else {
-              item[prop] = "false";
-            }
-
-          });
-        if (item[prop] === "true" || item[prop] === true) {
-          doneCheck.checked = true;
-        } else {
-          doneCheck.checked = false;
-        }
-        td.appendChild(doneCheck);
-      // } else if (prop === "priority") {
-      //     const select = document.createElement("select");
-      //     priorities.forEach ((elem) => {
-      //       let option = document.createElement("option");
-      //       option.value = elem;
-      //       option.textContent = elem;
-      //       select.appendChild(option);
-      //     });
-      //     td.appendChild(select);
- 
-      } else {
-        td.textContent = `${item[prop]}`;
-      }
-
-      table.appendChild(td);
-    }
     const tr = document.createElement("tr");
-    table.appendChild(tr);
+    const tdCheck = document.createElement("td");
+    const doneCheck = document.createElement("input");
+    doneCheck.setAttribute("type", "checkbox");
+    doneCheck.setAttribute("class", "donebox");
+    doneCheck.addEventListener("click", function changeDoneState() {
+      if (this.checked) {
+        item[checklist] = "true";
+      } else {
+        item[checklist] = "false";
+      }
+    });
+    if (item[checklist] === "true" || item[checklist] === true) {
+      doneCheck.checked = true;
+    } else {
+      doneCheck.checked = false;
+    };
+    tdCheck.appendChild(doneCheck);
+    tr.appendChild(tdCheck);
+
+    const tdTitle = document.createElement("td");
+    tdTitle.textContent = item.title;
+    tr.appendChild(tdTitle);
+    table.appendChild(tr);    
   });
-  tableDiv.appendChild(tableLabel);
-  tableDiv.appendChild(table);
+    tableDiv.appendChild(tableLabel);
+    tableDiv.appendChild(table);
 }
 
 function renderProjNav() {
