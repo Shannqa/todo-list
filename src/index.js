@@ -20,6 +20,7 @@ class Task {
     notes,
     project
   ) {
+    this._id = getTaskID();
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
@@ -34,7 +35,7 @@ class Task {
 class Project {
   constructor(name) {
     this._name = name; 
-    this._id = getID();
+    this._id = getProjectID();
     this._taskList = [];
     projects.push(this);
   }
@@ -52,14 +53,21 @@ class Project {
   set taskList(value) {
     this._taskList.push(value);
   }
-
 }
 
-function getID() {
+function getProjectID() {
   let randomNum = () => {
     return Math.floor((1 + Math.random())* 0x10000).toString(16).substring(1);
   };
   let randomID = randomNum() + randomNum() + randomNum() + randomNum();
+  return randomID;
+}
+
+function getTaskID() {
+  let randomNum = () => {
+    return Math.floor((1 + Math.random())* 0x10000).toString(36).substring(1);
+  };
+  let randomID = randomNum() + randomNum() + randomNum() + randomNum() + randomNum();
   return randomID;
 }
 

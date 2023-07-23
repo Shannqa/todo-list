@@ -190,6 +190,7 @@ function renderTasks(tasklist = openTasks) {
   
   tasklist.forEach((item) => {
     const tr = document.createElement("tr");
+    tr.dataset.index = item._id;
     const tdCheck = document.createElement("td");
     const doneCheck = document.createElement("input");
     doneCheck.setAttribute("type", "checkbox");
