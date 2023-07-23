@@ -64,6 +64,13 @@ button {
   color: var(--font3);
 }
 
+/* Task table */
+
+.tablelabel {
+  margin-bottom: 0.8rem;
+  font-size: large;
+}
+
 table {
   border: 1px var(--accent) solid;
   border-collapse: collapse;
@@ -76,8 +83,18 @@ th {
 }
 td {
   border: 1px var(--accent) solid;
-  padding: 3px;
+  padding: 4px 5px;
 }
+
+table .taskcheck {
+  width: 1rem;
+}
+
+table .tasktitle {
+  width: 600px;
+}
+
+/* Modal window */
 
 .modal {
   display: none;

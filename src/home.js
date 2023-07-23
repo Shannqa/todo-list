@@ -174,6 +174,8 @@ function renderTasks(tasklist = openTasks) {
   const tableDiv = document.querySelector(".tableDiv");
   removeTable();
   const tableLabel = document.createElement("div");
+  tableLabel.setAttribute("class", "tablelabel");
+
   if (tasklist == allTasks) {
     tableLabel.textContent = "All tasks";
   } else if (tasklist == finishedTasks) {
@@ -189,7 +191,7 @@ function renderTasks(tasklist = openTasks) {
     const tdCheck = document.createElement("td");
     const doneCheck = document.createElement("input");
     doneCheck.setAttribute("type", "checkbox");
-    doneCheck.setAttribute("class", "donebox");
+    doneCheck.setAttribute("class", "taskcheck");
     doneCheck.addEventListener("click", function changeDoneState() {
       if (this.checked) {
         item[checklist] = "true";
@@ -206,6 +208,7 @@ function renderTasks(tasklist = openTasks) {
     tr.appendChild(tdCheck);
 
     const tdTitle = document.createElement("td");
+    tdTitle.setAttribute("class", "tasktitle");
     tdTitle.textContent = item.title;
     tr.appendChild(tdTitle);
     table.appendChild(tr);    
