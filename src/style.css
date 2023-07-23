@@ -94,6 +94,14 @@ table .tasktitle {
   width: 600px;
 }
 
+.tdedit img {
+  width: 1rem;
+}
+
+.tddelete img {
+  width: 1rem;
+}
+
 /* Modal window */
 
 .modal {

@@ -1,5 +1,7 @@
 import { formatDuration } from "date-fns";
 import { openTasks, allTasks, finishedTasks, projects, priorities, addTask } from ".";
+import editIcon from './edit_icon.svg';
+import deleteIcon from './delete_icon.svg';
 export { renderTasks, closeModal };
 
 const elements = [
@@ -211,6 +213,21 @@ function renderTasks(tasklist = openTasks) {
     tdTitle.setAttribute("class", "tasktitle");
     tdTitle.textContent = item.title;
     tr.appendChild(tdTitle);
+
+    const tdEdit = document.createElement("td");
+    tdEdit.setAttribute("class", "tdedit");
+    const imgEdit = new Image();
+    imgEdit.src = editIcon;
+    tdEdit.appendChild(imgEdit);
+    tr.appendChild(tdEdit);
+
+    const tdDelete = document.createElement("td");
+    tdDelete.setAttribute("class", "tddelete");
+    const imgDelete = new Image();
+    imgDelete.src = deleteIcon;
+    tdDelete.appendChild(imgDelete);
+    tr.appendChild(tdDelete);
+
     table.appendChild(tr);    
   });
     tableDiv.appendChild(tableLabel);
