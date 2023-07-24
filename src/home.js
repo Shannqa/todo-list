@@ -16,70 +16,44 @@ const elements = [
 
 const body = document.querySelector("body");
 
-function createHeader() {
-  const header = document.createElement("div");
-  header.classList.add("header");
-  header.textContent = "To Do List";
-  body.appendChild(header);
-}
-function renderOpen() {
-  renderTasks(openTasks);
-}
-function renderAll() {
-  renderTasks(allTasks);
-}
-function renderFinished() {
-  renderTasks(finishedTasks);
-}
-function createNav() {
-  const nav = document.createElement("div");
-  const navUl = document.createElement("ul");
-  const navOpen = document.createElement("li");
-  const navAll = document.createElement("li");
-  const navFinished = document.createElement("li");
-  const projectsDiv = document.createElement("div");
-  const projectsUl = document.createElement("ul");
-
-  nav.classList.add("navigation");
-  navOpen.textContent = "Open tasks";
-  navOpen.addEventListener("click", renderOpen);
-  navAll.textContent = "All tasks";
-  navAll.addEventListener("click", renderAll);
-  navFinished.textContent = "Finished tasks";
-  navFinished.addEventListener("click", renderFinished);
-
-  projectsDiv.textContent = "Projects";
-  projectsUl.classList.add("projects-nav");
-
-  nav.appendChild(navUl);
-  navUl.appendChild(navOpen);
-  navUl.appendChild(navAll);
-  navUl.appendChild(navFinished);
-  projectsDiv.appendChild(projectsUl);
-  nav.appendChild(projectsDiv);
-
-  body.appendChild(nav);
-}
-
 export default function createDom() {
   createHeader();
   createNav();
   renderProjNav();
 
-  /* Main */
-
   const main = document.createElement("div");
+  main.classList.add("main");
 
+  createModal()
+  
+  const tableDiv = document.createElement("div");
+  tableDiv.classList.add("tableDiv");
+
+  const addTaskBtn = document.createElement("button");
+  addTaskBtn.addEventListener("click", () => {
+    const modal = document.querySelector(".modal");
+    modal.style.display = "flex";
+  });
+  addTaskBtn.classList.add("add-button");
+  addTaskBtn.textContent = "+";
+
+  main.appendChild(addTaskBtn);
+  main.appendChild(tableDiv);
+  body.appendChild(main);
+  renderTasks();
+}
+
+function createModal() {
   /* Modal window for creating a new task */
   const modalWind = document.createElement("div");
-  
+    
   const closeBtn = document.createElement("button");
   closeBtn.classList.add("close-btn");
   closeBtn.addEventListener("click", closeModal);
   modalWind.appendChild(closeBtn);
 
   const form = document.createElement("form");
-  main.classList.add("main");
+
   form.setAttribute("id", "form");
   modalWind.classList.add("modal");
 
@@ -141,22 +115,55 @@ export default function createDom() {
   modalWind.appendChild(form);
 
   body.appendChild(modalWind);
+}
 
-  const tableDiv = document.createElement("div");
-  tableDiv.classList.add("tableDiv");
+function createHeader() {
+  const header = document.createElement("div");
+  header.classList.add("header");
+  header.textContent = "To Do List";
+  body.appendChild(header);
+}
 
-  const addTaskBtn = document.createElement("button");
-  addTaskBtn.addEventListener("click", () => {
-    const modal = document.querySelector(".modal");
-    modal.style.display = "flex";
-  });
-  addTaskBtn.classList.add("add-button");
-  addTaskBtn.textContent = "+";
+function renderOpen() {
+  renderTasks(openTasks);
+}
 
-  main.appendChild(addTaskBtn);
-  main.appendChild(tableDiv);
-  body.appendChild(main);
-  renderTasks();
+function renderAll() {
+  renderTasks(allTasks);
+}
+
+function renderFinished() {
+  renderTasks(finishedTasks);
+}
+
+function createNav() {
+  const nav = document.createElement("div");
+  const navUl = document.createElement("ul");
+  const navOpen = document.createElement("li");
+  const navAll = document.createElement("li");
+  const navFinished = document.createElement("li");
+  const projectsDiv = document.createElement("div");
+  const projectsUl = document.createElement("ul");
+
+  nav.classList.add("navigation");
+  navOpen.textContent = "Open tasks";
+  navOpen.addEventListener("click", renderOpen);
+  navAll.textContent = "All tasks";
+  navAll.addEventListener("click", renderAll);
+  navFinished.textContent = "Finished tasks";
+  navFinished.addEventListener("click", renderFinished);
+
+  projectsDiv.textContent = "Projects";
+  projectsUl.classList.add("projects-nav");
+
+  nav.appendChild(navUl);
+  navUl.appendChild(navOpen);
+  navUl.appendChild(navAll);
+  navUl.appendChild(navFinished);
+  projectsDiv.appendChild(projectsUl);
+  nav.appendChild(projectsDiv);
+
+  body.appendChild(nav);
 }
 
 function closeModal() {
