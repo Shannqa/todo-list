@@ -25,7 +25,7 @@ export default function createDom() {
   main.classList.add("main");
 
   createModal()
-  
+
   const tableDiv = document.createElement("div");
   tableDiv.classList.add("tableDiv");
 
@@ -45,66 +45,94 @@ export default function createDom() {
 
 function createModal() {
   /* Modal window for creating a new task */
-  const modalWind = document.createElement("div");
+  const modalWindow = document.createElement("div");
     
   const closeBtn = document.createElement("button");
   closeBtn.classList.add("close-btn");
   closeBtn.addEventListener("click", closeModal);
-  modalWind.appendChild(closeBtn);
+  modalWindow.appendChild(closeBtn);
 
   const form = document.createElement("form");
 
   form.setAttribute("id", "form");
-  modalWind.classList.add("modal");
+  modalWindow.classList.add("modal");
 
-  elements.forEach((item) => {
-    if (item.short === "priority") {
-    const select = document.createElement("select");
-    select.setAttribute("id", `${item.short}`);
-    priorities.forEach ((elem) => {
-      let option = document.createElement("option");
-      option.value = elem;
-      option.textContent = elem;
-      select.appendChild(option);
-    });
-    const label = document.createElement("label");
-    label.setAttribute("for", `${item.short}`);
-    label.textContent = `${item.full}`;
-    form.appendChild(label);
+  //title
+  const inputTitle = document.createElement("input");
+  inputTitle.setAttribute("id", "title");
+  const labelTitle = document.createElement("label");
+  labelTitle.setAttribute("for", "title");
+  labelTitle.textContent = "Title";
+  form.appendChild(labelTitle);
+  form.appendChild(inputTitle);
 
-    form.appendChild(select);
+  //description
+  const inputDesc = document.createElement("input");
+  inputDesc.setAttribute("id", "description");
+  const labelDesc = document.createElement("label");
+  labelDesc.setAttribute("for", "description");
+  labelDesc.textContent = "Description";
+  form.appendChild(labelDesc);
+  form.appendChild(inputDesc);
 
-    } else if (item.short === "project") {
-      const selectProject = document.createElement("select");
-      selectProject.setAttribute("id", `${item.short}`);
-      projects.forEach ((elem) => {
-      let projOption = document.createElement("option");
-      projOption.value = elem.name;
-      projOption.textContent = elem.name
-      selectProject.appendChild(projOption);
-    });
-    const label = document.createElement("label");
-    label.setAttribute("for", `${item.short}`);
-    label.textContent = `${item.full}`;
-    form.appendChild(label);
+  //due date
+  const inputDue = document.createElement("input");
+  inputDue.setAttribute("id", "dueDate");
+  const labelDue = document.createElement("label");
+  labelDue.setAttribute("for", "dueDate");
+  labelDue.textContent = "Due Date";
+  form.appendChild(labelDue);
+  form.appendChild(inputDue);
 
-    form.appendChild(selectProject);
-    } else {
+  //priority
+  const selectPriority = document.createElement("select");
+  selectPriority.setAttribute("id", "priority");
+  priorities.forEach ((elem) => {
+    let option = document.createElement("option");
+    option.value = elem;
+    option.textContent = elem;
+    selectPriority.appendChild(option);
+  });
+  const labelPriority = document.createElement("label");
+  labelPriority.setAttribute("for", "priority");
+  labelPriority.textContent = "Priority";
+  form.appendChild(labelPriority);
+  form.appendChild(selectPriority);
 
-    const input = document.createElement("input");
-    input.setAttribute("id", `${item.short}`);
-    if (item.short === "checklist") {
-      input.setAttribute("type", "checkbox");
-      input.setAttribute("value", "done");
-    }
+  //project
+  const selectProject = document.createElement("select");
+  selectProject.setAttribute("id", "project");
+  projects.forEach ((elem) => {
+    let projOption = document.createElement("option");
+    projOption.value = elem.name;
+    projOption.textContent = elem.name;
+    selectProject.appendChild(projOption);
+  });
+  const labelProject = document.createElement("label");
+  labelProject.setAttribute("for", "project");
+  labelProject.textContent = "Project";
+  form.appendChild(labelProject);
+  form.appendChild(selectProject);
 
-    const label = document.createElement("label");
-    label.setAttribute("for", `${item.short}`);
-    label.textContent = `${item.full}`;
-    form.appendChild(label);
-    form.appendChild(input);
-  }});
+  //checklist
+  const inputCheck = document.createElement("input");
+  inputCheck.setAttribute("id", "checklist");
+  inputCheck.setAttribute("type", "checkbox");
+  inputCheck.setAttribute("value", "done");
+  const labelCheck = document.createElement("label");
+  labelCheck.setAttribute("for", "checklist");
+  labelCheck.textContent = "Done?";
+  form.appendChild(labelCheck);
+  form.appendChild(inputCheck);
 
+  //notes
+  const inputNotes = document.createElement("input");
+  inputNotes.setAttribute("id", "notes");
+  const labelNotes = document.createElement("label");
+  labelNotes.setAttribute("for", "notes");
+  labelNotes.textContent = "Additional notes";
+  form.appendChild(labelNotes);
+  form.appendChild(inputNotes);
 
   const submitBtn = document.createElement("button");
   submitBtn.addEventListener("click", addTask);
@@ -112,9 +140,9 @@ function createModal() {
   submitBtn.textContent = "Submit";
   form.appendChild(submitBtn);
 
-  modalWind.appendChild(form);
+  modalWindow.appendChild(form);
 
-  body.appendChild(modalWind);
+  body.appendChild(modalWindow);
 }
 
 function createHeader() {
