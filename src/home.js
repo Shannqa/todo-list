@@ -254,6 +254,11 @@ function renderTasks(tasklist = openTasks) {
     tdEdit.setAttribute("class", "tdedit");
     const imgEdit = new Image();
     imgEdit.src = editIcon;
+    imgEdit.dataset.index = item._id;
+    imgEdit.addEventListener("click", (event) => {
+      let taskID = event.target.dataset.index;
+      console.log(taskID);
+    });
     tdEdit.appendChild(imgEdit);
     tr.appendChild(tdEdit);
 
