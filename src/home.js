@@ -43,7 +43,7 @@ export default function createDom() {
   renderTasks();
 }
 
-function createModal() {
+function createModal(taskIndex) {
   /* Modal window for creating a new task */
   const modalWindow = document.createElement("div");
     
@@ -56,6 +56,11 @@ function createModal() {
 
   form.setAttribute("id", "form");
   modalWindow.classList.add("modal");
+
+  //task's id
+  const spanID = document.createElement("span");
+  spanID.textContent = taskIndex;
+  form.appendChild(spanID);
 
   //title
   const inputTitle = document.createElement("input");
@@ -258,6 +263,18 @@ function renderTasks(tasklist = openTasks) {
     imgEdit.addEventListener("click", (event) => {
       let taskID = event.target.dataset.index;
       console.log(taskID);
+      // createModal();
+
+      //ok. so createModal() creates an invisible empty modal window. the add button just changes the display from none to flex.
+      // if we want to use it for adding new tasks and editing existing tasks, we need to change it. 
+      //for example, createModal() could create the hidden window, all labels etc as it currently does. the window would be invisible 
+      // then we would have another function, showModal(id), triggered on edit tasks buttons and add task button => it would change the display from none to flex; then if id is undefined (!id) (?),
+      // we would not change any inputs, and clicking submit would trigger addnewtask function, which actually adds a task. if we do have an id of a task, we need to search for this id in the tasklist, 
+      // then edit the modal window to show current data in all the input fields. clicking the submit button in this case would edit the existing task, not add a new one.
+      
+
+        const modal = document.querySelector(".modal");
+        modal.style.display = "flex";
     });
     tdEdit.appendChild(imgEdit);
     tr.appendChild(tdEdit);
