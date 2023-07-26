@@ -150,6 +150,29 @@ function createModal(taskIndex) {
   body.appendChild(modalWindow);
 }
 
+function showModal(id) {
+  const modal = document.querySelector(".modal");
+  modal.style.display = "flex";
+  let bibi = id;
+  console.log(bibi);
+  let searchedTask = allTasks.find((task) => task._id == bibi);
+  console.log(searchedTask);
+  let title = document.getElementById("title");
+  let description = document.getElementById("description");
+  let dueDate = document.getElementById("dueDate");
+  let project = document.getElementById("project");
+  let checklist = document.getElementById("checklist");
+  let notes = document.getElementById("notes");
+  title.value = searchedTask.title;
+  description.value = searchedTask.description;
+  dueDate.value = searchedTask.dueDate;
+  project.value = searchedTask.project;
+  if (searchedTask.checklist) {
+    checklist.checked = true;
+  };
+  notes.value = searchedTask.notes;
+}
+
 function createHeader() {
   const header = document.createElement("div");
   header.classList.add("header");
@@ -262,7 +285,6 @@ function renderTasks(tasklist = openTasks) {
     imgEdit.dataset.index = item._id;
     imgEdit.addEventListener("click", (event) => {
       let taskID = event.target.dataset.index;
-      console.log(taskID);
       // createModal();
 
       //ok. so createModal() creates an invisible empty modal window. the add button just changes the display from none to flex.
@@ -271,10 +293,7 @@ function renderTasks(tasklist = openTasks) {
       // then we would have another function, showModal(id), triggered on edit tasks buttons and add task button => it would change the display from none to flex; then if id is undefined (!id) (?),
       // we would not change any inputs, and clicking submit would trigger addnewtask function, which actually adds a task. if we do have an id of a task, we need to search for this id in the tasklist, 
       // then edit the modal window to show current data in all the input fields. clicking the submit button in this case would edit the existing task, not add a new one.
-      
-
-        const modal = document.querySelector(".modal");
-        modal.style.display = "flex";
+      showModal(taskID);
     });
     tdEdit.appendChild(imgEdit);
     tr.appendChild(tdEdit);
