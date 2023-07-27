@@ -83,7 +83,6 @@ function addTask(event) {
   );
   console.log(newTask);
 
-  openTasks.push(newTask);
   allTasks.push(newTask);
   checkTasks();
   renderTasks("open");
@@ -118,6 +117,5 @@ const defaultTask = new Task(
   "Default"
 );
 
-openTasks.push(defaultTask);
 allTasks.push(defaultTask);
 createDom();
