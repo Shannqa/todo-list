@@ -9,7 +9,7 @@ const elements = [
   { short: "description", full: "Description" },
   { short: "dueDate", full: "Due date" },
   { short: "priority", full: "Priority" },
-  { short: "checklist", full: "Done?" },
+  { short: "done", full: "Done?" },
   { short: "notes", full: "Notes" },
   { short: "project", full: "Project" },
 ];
@@ -121,11 +121,11 @@ function createModal(taskIndex) {
 
   //checklist
   const inputCheck = document.createElement("input");
-  inputCheck.setAttribute("id", "checklist");
+  inputCheck.setAttribute("id", "done");
   inputCheck.setAttribute("type", "checkbox");
-  inputCheck.setAttribute("value", "done");
+  inputCheck.setAttribute("value", "false");
   const labelCheck = document.createElement("label");
-  labelCheck.setAttribute("for", "checklist");
+  labelCheck.setAttribute("for", "done");
   labelCheck.textContent = "Done?";
   form.appendChild(labelCheck);
   form.appendChild(inputCheck);
@@ -161,14 +161,14 @@ function showModal(id) {
   let description = document.getElementById("description");
   let dueDate = document.getElementById("dueDate");
   let project = document.getElementById("project");
-  let checklist = document.getElementById("checklist");
+  let done = document.getElementById("done");
   let notes = document.getElementById("notes");
   title.value = searchedTask.title;
   description.value = searchedTask.description;
   dueDate.value = searchedTask.dueDate;
   project.value = searchedTask.project;
-  if (searchedTask.checklist) {
-    checklist.checked = true;
+  if (searchedTask.done) {
+    done.checked = true;
   };
   notes.value = searchedTask.notes;
 }
@@ -230,13 +230,13 @@ function closeModal() {
   let description = document.getElementById("description");
   let dueDate = document.getElementById("dueDate");
   let project = document.getElementById("project");
-  let checklist = document.getElementById("checklist");
+  let done = document.getElementById("done");
   let notes = document.getElementById("notes");
   title.value = "";
   description.value = "";
   dueDate.value = "";
   project.value = "Default";
-  checklist.checked = false;
+  done.checked = false;
   notes.value = "";
 }
 
@@ -258,10 +258,10 @@ function renderTasks(tasklist) {
   let list;
   if (tasklist === "open") {
     tableLabel.textContent = "Open tasks";
-    list = allTasks.filter((task) => task.checklist === "true" || task.checklist === true);
+    list = allTasks.filter((task) => task.done === "false" || task.done === false);
   } else if (tasklist === "finished") {
     tableLabel.textContent = "Finished tasks";
-    list = allTasks.filter((task) => task.checklist === "false" || task.checklist === false);
+    list = allTasks.filter((task) => task.done === "true" || task.done === true);
   } else if (tasklist === "all") {
     tableLabel.textContent = "All tasks";
     list = allTasks;
@@ -278,12 +278,12 @@ function renderTasks(tasklist) {
     doneCheck.setAttribute("class", "taskcheck");
     doneCheck.addEventListener("click", function changeDoneState() {
       if (this.checked) {
-        item[checklist] = "true";
+        item[done] = "true";
       } else {
-        item[checklist] = "false";
+        item[done] = "false";
       }
     });
-    if (item[checklist] === "true" || item[checklist] === true) {
+    if (item[done] === "true" || item[done] === true) {
       doneCheck.checked = true;
     } else {
       doneCheck.checked = false;

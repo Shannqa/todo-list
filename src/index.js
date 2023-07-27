@@ -14,7 +14,7 @@ class Task {
     description,
     dueDate,
     priority,
-    checklist,
+    done,
     notes,
     project
   ) {
@@ -23,7 +23,7 @@ class Task {
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.checklist = checklist;
+    this.done = done;
     this.notes = notes;
     this.project = project;
   }
@@ -71,13 +71,13 @@ function getTaskID() {
 
 function addTask(event) {
   const form = document.querySelector("#form");
-  const check = document.querySelector("#checklist");
+  const done = document.querySelector("#done");
   let newTask = new Task(
     title.value,
     description.value,
     dueDate.value,
     priority.value,
-    check.checked,
+    done.checked,
     notes.value,
     project.value
   );
@@ -91,8 +91,8 @@ function addTask(event) {
 }
 
 function checkTasks() {
-  let open = allTasks.filter((task) => task.checklist === "true" || task.checklist === true);
-  let finished = allTasks.filter((task) => task.checklist === "false" || task.checklist === false);
+  let finished = allTasks.filter((task) => task.done === "true" || task.done === true);
+  let open = allTasks.filter((task) => task.done === "false" || task.done === false);
 
   console.log(open);
   console.log(finished);
@@ -112,7 +112,7 @@ const defaultTask = new Task(
   "brush your teeth",
   "now",
   "high",
-  "true",
+  "false",
   "no",
   "Default"
 );
