@@ -225,6 +225,19 @@ function createNav() {
 function closeModal() {
   const modal = document.querySelector(".modal");
   modal.style.display = "none";
+
+  let title = document.getElementById("title");
+  let description = document.getElementById("description");
+  let dueDate = document.getElementById("dueDate");
+  let project = document.getElementById("project");
+  let checklist = document.getElementById("checklist");
+  let notes = document.getElementById("notes");
+  title.value = "";
+  description.value = "";
+  dueDate.value = "";
+  project.value = "Default";
+  checklist.checked = false;
+  notes.value = "";
 }
 
 /* List of tasks */
