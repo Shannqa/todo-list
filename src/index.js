@@ -2,11 +2,9 @@
 
 import createDom, { renderTasks, closeModal } from "./home";
 import "./style.css";
-export { openTasks, allTasks, finishedTasks, projects, priorities, addTask };
+export { allTasks, projects, priorities, addTask };
 
-const openTasks = [];
 const allTasks = [];
-const finishedTasks = [];
 const projects = [];
 const priorities = ["High", "Medium", "Low"];
 
@@ -88,7 +86,7 @@ function addTask(event) {
   openTasks.push(newTask);
   allTasks.push(newTask);
   checkTasks();
-  renderTasks();
+  renderTasks("open");
   closeModal();
   event.preventDefault();
 }

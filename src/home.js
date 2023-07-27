@@ -1,5 +1,5 @@
 import { formatDuration } from "date-fns";
-import { openTasks, allTasks, finishedTasks, projects, priorities, addTask } from ".";
+import { allTasks, projects, priorities, addTask } from ".";
 import editIcon from './edit_icon.svg';
 import deleteIcon from './delete_icon.svg';
 export { renderTasks, closeModal };
@@ -40,7 +40,7 @@ export default function createDom() {
   main.appendChild(addTaskBtn);
   main.appendChild(tableDiv);
   body.appendChild(main);
-  renderTasks();
+  renderTasks("open");
 }
 
 function createModal(taskIndex) {
@@ -181,15 +181,15 @@ function createHeader() {
 }
 
 function renderOpen() {
-  renderTasks(openTasks);
+  renderTasks("open");
 }
 
 function renderAll() {
-  renderTasks(allTasks);
+  renderTasks("all");
 }
 
 function renderFinished() {
-  renderTasks(finishedTasks);
+  renderTasks("finished");
 }
 
 function createNav() {
@@ -248,23 +248,28 @@ function removeTable() {
   }
 }
 
-function renderTasks(tasklist = openTasks) {
+function renderTasks(tasklist) {
+
   const tableDiv = document.querySelector(".tableDiv");
   removeTable();
   const tableLabel = document.createElement("div");
   tableLabel.setAttribute("class", "tablelabel");
 
-  if (tasklist == allTasks) {
-    tableLabel.textContent = "All tasks";
-  } else if (tasklist == finishedTasks) {
-    tableLabel.textContent = "Finished tasks";
-  } else {
+  let list;
+  if (tasklist === "open") {
     tableLabel.textContent = "Open tasks";
+    list = allTasks.filter((task) => task.checklist === "true" || task.checklist === true);
+  } else if (tasklist === "finished") {
+    tableLabel.textContent = "Finished tasks";
+    list = allTasks.filter((task) => task.checklist === "false" || task.checklist === false);
+  } else if (tasklist === "all") {
+    tableLabel.textContent = "All tasks";
+    list = allTasks;
   }
 
   const table = document.createElement("table");
   
-  tasklist.forEach((item) => {
+  list.forEach((item) => {
     const tr = document.createElement("tr");
     tr.dataset.index = item._id;
     const tdCheck = document.createElement("td");
@@ -298,15 +303,7 @@ function renderTasks(tasklist = openTasks) {
     imgEdit.dataset.index = item._id;
     imgEdit.addEventListener("click", (event) => {
       let taskID = event.target.dataset.index;
-      // createModal();
-
-      //ok. so createModal() creates an invisible empty modal window. the add button just changes the display from none to flex.
-      // if we want to use it for adding new tasks and editing existing tasks, we need to change it. 
-      //for example, createModal() could create the hidden window, all labels etc as it currently does. the window would be invisible 
-      // then we would have another function, showModal(id), triggered on edit tasks buttons and add task button => it would change the display from none to flex; then if id is undefined (!id) (?),
-      // we would not change any inputs, and clicking submit would trigger addnewtask function, which actually adds a task. if we do have an id of a task, we need to search for this id in the tasklist, 
-      // then edit the modal window to show current data in all the input fields. clicking the submit button in this case would edit the existing task, not add a new one.
-      showModal(taskID);
+            showModal(taskID);
     });
     tdEdit.appendChild(imgEdit);
     tr.appendChild(tdEdit);
