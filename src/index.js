@@ -84,12 +84,23 @@ function addTask(event) {
     project.value
   );
   console.log(newTask);
+
   openTasks.push(newTask);
   allTasks.push(newTask);
+  checkTasks();
   renderTasks();
   closeModal();
   event.preventDefault();
 }
+
+function checkTasks() {
+  let open = allTasks.filter((task) => task.checklist === "true" || task.checklist === true);
+  let finished = allTasks.filter((task) => task.checklist === "false" || task.checklist === false);
+
+  console.log(open);
+  console.log(finished);
+}
+
 
 function addProject(name) {
   let newProject = new Project(name);
