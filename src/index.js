@@ -2,7 +2,7 @@
 
 import createDom, { renderTasks, closeModal } from "./home";
 import "./style.css";
-export { allTasks, projects, priorities, addTask };
+export { allTasks, projects, priorities, addTask, checkTasks };
 
 const allTasks = [];
 const projects = [];
@@ -86,6 +86,31 @@ function addTask(event) {
   allTasks.push(newTask);
   checkTasks();
   renderTasks("open");
+  closeModal();
+  event.preventDefault();
+}
+
+function editTask(event) {
+  const form = document.querySelector("#form");
+  const done = document.querySelector("#done");
+let taskID = id.value;
+let searchedTask = allTasks.find((task) => task._id == bibi);
+  let newTask = new Task(
+    title.value,
+    description.value,
+    dueDate.value,
+    priority.value,
+    done.checked,
+    notes.value,
+    project.value
+  );
+
+
+  // console.log(newTask);
+
+  // allTasks.push(newTask);
+  // checkTasks();
+  // renderTasks("open");
   closeModal();
   event.preventDefault();
 }

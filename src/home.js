@@ -1,9 +1,11 @@
 import { formatDuration } from "date-fns";
-import { allTasks, projects, priorities, addTask } from ".";
+import { allTasks, projects, priorities, addTask, checkTasks } from ".";
 import editIcon from './edit_icon.svg';
 import deleteIcon from './delete_icon.svg';
 export { renderTasks, closeModal };
 
+
+// to do: bug, when you edit a task you succesfully edit the one + create a new empty one at the same time
 const elements = [
   { short: "title", full: "Title" },
   { short: "description", full: "Description" },
@@ -30,10 +32,11 @@ export default function createDom() {
   tableDiv.classList.add("tableDiv");
 
   const addTaskBtn = document.createElement("button");
-  addTaskBtn.addEventListener("click", () => {
-    const modal = document.querySelector(".modal");
-    modal.style.display = "flex";
-  });
+  addTaskBtn.addEventListener("click", () => {showModal("add")});
+  // addTaskBtn.addEventListener("click", () => {
+  //   const modal = document.querySelector(".modal");
+  //   modal.style.display = "flex";
+  // });
   addTaskBtn.classList.add("add-button");
   addTaskBtn.textContent = "+";
 
@@ -56,6 +59,7 @@ function createModal(taskIndex) {
 
   form.setAttribute("id", "form");
   modalWindow.classList.add("modal");
+  modalWindow.style.display = "none";
 
   //task's id
   const spanID = document.createElement("span");
@@ -140,7 +144,7 @@ function createModal(taskIndex) {
   form.appendChild(inputNotes);
 
   const submitBtn = document.createElement("button");
-  submitBtn.addEventListener("click", addTask);
+  // submitBtn.addEventListener("click", addTask);
   submitBtn.setAttribute("id", "submit");
   submitBtn.textContent = "Submit";
   form.appendChild(submitBtn);
@@ -153,25 +157,57 @@ function createModal(taskIndex) {
 function showModal(id) {
   const modal = document.querySelector(".modal");
   modal.style.display = "flex";
-  let bibi = id;
-  console.log(bibi);
-  let searchedTask = allTasks.find((task) => task._id == bibi);
-  console.log(searchedTask);
-  let title = document.getElementById("title");
-  let description = document.getElementById("description");
-  let dueDate = document.getElementById("dueDate");
-  let project = document.getElementById("project");
-  let done = document.getElementById("done");
-  let notes = document.getElementById("notes");
-  title.value = searchedTask.title;
-  description.value = searchedTask.description;
-  dueDate.value = searchedTask.dueDate;
-  project.value = searchedTask.project;
-  if (searchedTask.done) {
-    done.checked = true;
-  };
-  notes.value = searchedTask.notes;
+  let submitButtotn = document.querySelector("#submit");
+  if (id == "add") {
+    //add a new task
+    submitButtotn.addEventListener("click", addTask);
+  } else {
+  //rendering the task that will be edited
+    let taskID = id;
+    console.log("id: " + taskID);
+    let searchedTask = allTasks.find((task) => task._id == taskID);
+    console.log(searchedTask);
+    let title = document.getElementById("title");
+    let description = document.getElementById("description");
+    let dueDate = document.getElementById("dueDate");
+    let project = document.getElementById("project");
+    let done = document.getElementById("done");
+    let notes = document.getElementById("notes");
+    title.value = searchedTask.title;
+    description.value = searchedTask.description;
+    dueDate.value = searchedTask.dueDate;
+    project.value = searchedTask.project;
+    if (searchedTask.done) {
+      done.checked = true;
+    };
+    notes.value = searchedTask.notes;
+  
+  
+    // now editing the task    
+      submitButtotn.addEventListener("click", (event) => {
+  
+      searchedTask.title = title.value;
+      searchedTask.description = description.value;
+      searchedTask.dueDate = dueDate.value;
+      searchedTask.project = project.value;
+      if (done.checked) {
+        searchedTask.done = true;
+      } else {
+        searchedTask.done = false;
+      }
+      searchedTask.notes = notes.value;
+      checkTasks();
+      renderTasks("open");
+      closeModal();
+      event.preventDefault();
+      console.log("edited");
+    });
+  }
+  
+
 }
+
+
 
 function createHeader() {
   const header = document.createElement("div");
