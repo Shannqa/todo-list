@@ -93,9 +93,6 @@ function addTask(event) {
 function checkTasks() {
   let finished = allTasks.filter((task) => task.done === "true" || task.done === true);
   let open = allTasks.filter((task) => task.done === "false" || task.done === false);
-
-  console.log(open);
-  console.log(finished);
 }
 
 

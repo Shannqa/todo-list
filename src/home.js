@@ -4,18 +4,6 @@ import editIcon from './edit_icon.svg';
 import deleteIcon from './delete_icon.svg';
 export { renderTasks, closeModal };
 
-
-// to do: bug, when you edit a task you succesfully edit the one + create a new empty one at the same time
-const elements = [
-  { short: "title", full: "Title" },
-  { short: "description", full: "Description" },
-  { short: "dueDate", full: "Due date" },
-  { short: "priority", full: "Priority" },
-  { short: "done", full: "Done?" },
-  { short: "notes", full: "Notes" },
-  { short: "project", full: "Project" },
-];
-
 const body = document.querySelector("body");
 let editedTask = null;
 
@@ -45,7 +33,7 @@ export default function createDom() {
   renderTasks("open");
 }
 
-function createModal(taskIndex) {
+function createModal() {
   /* Modal window for creating a new task */
   const modalWindow = document.createElement("div");
     
@@ -59,11 +47,6 @@ function createModal(taskIndex) {
   form.setAttribute("id", "form");
   modalWindow.classList.add("modal");
   modalWindow.style.display = "none";
-
-  //task's id
-  const spanID = document.createElement("span");
-  spanID.textContent = taskIndex;
-  form.appendChild(spanID);
 
   //title
   const inputTitle = document.createElement("input");
@@ -166,7 +149,6 @@ function createModal(taskIndex) {
 function showModal(taskID) {
   const modal = document.querySelector(".modal");
   modal.style.display = "flex";
-  console.log("showmodal" + taskID);
   if (typeof taskID === "string") {
     renderEditedTask(taskID);
   }
@@ -175,10 +157,8 @@ function showModal(taskID) {
 
 function renderEditedTask(id) {
     let taskID = id;
-    console.log("id: " + taskID);
     let searchedTask = allTasks.find((task) => task._id == taskID);
     editedTask = searchedTask;
-    console.log(searchedTask);
     let title = document.getElementById("title");
     let description = document.getElementById("description");
     let dueDate = document.getElementById("dueDate");
@@ -189,15 +169,16 @@ function renderEditedTask(id) {
     description.value = searchedTask.description;
     dueDate.value = searchedTask.dueDate;
     project.value = searchedTask.project;
-    if (searchedTask.done) {
+    if (searchedTask.done == true) {
       done.checked = true;
+    } else {
+      done.checked = false;
     };
-    notes.value = searchedTask.notes;    
-    console.log("render" + id);
-    return id;
+    notes.value = searchedTask.notes; 
   }
   
 function editTask() {
+  console.log(allTasks);
   editedTask.title = title.value;
   editedTask.description = description.value;
   editedTask.dueDate = dueDate.value;
@@ -209,7 +190,6 @@ function editTask() {
   }
   editedTask.notes = notes.value;
   
-  console.log("edited");
   editedTask = null;
 }
 
