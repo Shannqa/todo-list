@@ -1,5 +1,5 @@
 // import { formatDuration } from "date-fns";
-import { format } from "date-fns";
+import { compareAsc, format } from "date-fns";
 import { allTasks, projects, priorities, addTask, checkTasks } from ".";
 import editIcon from './edit_icon.svg';
 import deleteIcon from './delete_icon.svg';
@@ -288,6 +288,13 @@ function renderTasks(tasklist) {
     tableLabel.textContent = "All tasks";
     list = allTasks;
   }
+
+  //sorting the tasks by due date
+  list.sort((a, b) => {
+    let dateA = new Date(a.dueDate);
+    let dateB = new Date(b.dueDate);
+    return dateA - dateB;
+  });
 
   const table = document.createElement("table");
   
