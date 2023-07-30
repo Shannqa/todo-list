@@ -69,6 +69,7 @@ function createModal() {
   //due date
   const inputDue = document.createElement("input");
   inputDue.setAttribute("id", "dueDate");
+  inputDue.setAttribute("type", "date");
   const labelDue = document.createElement("label");
   labelDue.setAttribute("for", "dueDate");
   labelDue.textContent = "Due Date";
@@ -193,7 +194,6 @@ function editTask() {
   editedTask = null;
 }
 
-
 function createHeader() {
   const header = document.createElement("div");
   header.classList.add("header");
@@ -293,6 +293,8 @@ function renderTasks(tasklist) {
   list.forEach((item) => {
     const tr = document.createElement("tr");
     tr.dataset.index = item._id;
+
+    //done state column
     const tdCheck = document.createElement("td");
     const doneCheck = document.createElement("input");
     doneCheck.setAttribute("type", "checkbox");
@@ -312,11 +314,19 @@ function renderTasks(tasklist) {
     tdCheck.appendChild(doneCheck);
     tr.appendChild(tdCheck);
 
+    //title column
     const tdTitle = document.createElement("td");
     tdTitle.setAttribute("class", "tasktitle");
     tdTitle.textContent = item.title;
     tr.appendChild(tdTitle);
 
+    //date column
+    const tdDate = document.createElement("td")
+    tdDate.setAttribute("class", "tddate");
+    tdDate.textContent = item.dueDate;
+    tr.appendChild(tdDate);
+
+    //edit column
     const tdEdit = document.createElement("td");
     tdEdit.setAttribute("class", "tdedit");
     const imgEdit = new Image();
@@ -329,6 +339,7 @@ function renderTasks(tasklist) {
     tdEdit.appendChild(imgEdit);
     tr.appendChild(tdEdit);
 
+    //delete column
     const tdDelete = document.createElement("td");
     tdDelete.setAttribute("class", "tddelete");
     const imgDelete = new Image();
