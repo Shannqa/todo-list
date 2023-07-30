@@ -17,6 +17,7 @@ const elements = [
 ];
 
 const body = document.querySelector("body");
+let editedTask = null;
 
 export default function createDom() {
   createHeader();
@@ -32,11 +33,9 @@ export default function createDom() {
   tableDiv.classList.add("tableDiv");
 
   const addTaskBtn = document.createElement("button");
-  addTaskBtn.addEventListener("click", () => {showModal("add")});
-  // addTaskBtn.addEventListener("click", () => {
-  //   const modal = document.querySelector(".modal");
-  //   modal.style.display = "flex";
-  // });
+  addTaskBtn.addEventListener("click", () => {
+    showModal();
+  });
   addTaskBtn.classList.add("add-button");
   addTaskBtn.textContent = "+";
 
@@ -144,7 +143,17 @@ function createModal(taskIndex) {
   form.appendChild(inputNotes);
 
   const submitBtn = document.createElement("button");
-  // submitBtn.addEventListener("click", addTask);
+  submitBtn.addEventListener("click", (event) => {
+    if (editedTask == null) {
+      addTask();
+    } else {
+      editTask();
+    }
+  checkTasks();
+  renderTasks("open");
+  closeModal();
+  event.preventDefault();
+  });
   submitBtn.setAttribute("id", "submit");
   submitBtn.textContent = "Submit";
   form.appendChild(submitBtn);
@@ -154,18 +163,21 @@ function createModal(taskIndex) {
   body.appendChild(modalWindow);
 }
 
-function showModal(id) {
+function showModal(taskID) {
   const modal = document.querySelector(".modal");
   modal.style.display = "flex";
-  let submitButtotn = document.querySelector("#submit");
-  if (id == "add") {
-    //add a new task
-    submitButtotn.addEventListener("click", addTask);
-  } else {
-  //rendering the task that will be edited
+  console.log("showmodal" + taskID);
+  if (typeof taskID === "string") {
+    renderEditedTask(taskID);
+  }
+
+}
+
+function renderEditedTask(id) {
     let taskID = id;
     console.log("id: " + taskID);
     let searchedTask = allTasks.find((task) => task._id == taskID);
+    editedTask = searchedTask;
     console.log(searchedTask);
     let title = document.getElementById("title");
     let description = document.getElementById("description");
@@ -180,33 +192,26 @@ function showModal(id) {
     if (searchedTask.done) {
       done.checked = true;
     };
-    notes.value = searchedTask.notes;
-  
-  
-    // now editing the task    
-      submitButtotn.addEventListener("click", (event) => {
-  
-      searchedTask.title = title.value;
-      searchedTask.description = description.value;
-      searchedTask.dueDate = dueDate.value;
-      searchedTask.project = project.value;
-      if (done.checked) {
-        searchedTask.done = true;
-      } else {
-        searchedTask.done = false;
-      }
-      searchedTask.notes = notes.value;
-      checkTasks();
-      renderTasks("open");
-      closeModal();
-      event.preventDefault();
-      console.log("edited");
-    });
+    notes.value = searchedTask.notes;    
+    console.log("render" + id);
+    return id;
   }
   
-
+function editTask() {
+  editedTask.title = title.value;
+  editedTask.description = description.value;
+  editedTask.dueDate = dueDate.value;
+  editedTask.project = project.value;
+  if (done.checked) {
+    editedTask.done = true;
+  } else {
+    editedTask.done = false;
+  }
+  editedTask.notes = notes.value;
+  
+  console.log("edited");
+  editedTask = null;
 }
-
 
 
 function createHeader() {
