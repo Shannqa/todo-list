@@ -107,7 +107,7 @@ addProject("Bob");
 const defaultTask = new Task(
   "brush teeth",
   "brush your teeth",
-  "now",
+  "2023-07-07",
   "high",
   "false",
   "no",

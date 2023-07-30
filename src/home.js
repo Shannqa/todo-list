@@ -1,4 +1,5 @@
-import { formatDuration } from "date-fns";
+// import { formatDuration } from "date-fns";
+import { format } from "date-fns";
 import { allTasks, projects, priorities, addTask, checkTasks } from ".";
 import editIcon from './edit_icon.svg';
 import deleteIcon from './delete_icon.svg';
@@ -323,7 +324,9 @@ function renderTasks(tasklist) {
     //date column
     const tdDate = document.createElement("td")
     tdDate.setAttribute("class", "tddate");
-    tdDate.textContent = item.dueDate;
+    //human-readable date
+    let humanDate = format(new Date(item.dueDate), "dd MMM");
+    tdDate.textContent = humanDate;
     tr.appendChild(tdDate);
 
     //edit column
