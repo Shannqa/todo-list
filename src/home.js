@@ -179,6 +179,7 @@ function renderEditedTask(id) {
     notes.value = searchedTask.notes; 
   }
   
+// edit task  
 function editTask() {
   console.log(allTasks);
   editedTask.title = title.value;
@@ -193,6 +194,14 @@ function editTask() {
   editedTask.notes = notes.value;
   
   editedTask = null;
+}
+
+// delete task
+function deleteTask(taskID) {
+  let searchedTaskID = allTasks.findIndex((item) => item._id == taskID);
+  allTasks.splice(searchedTaskID, 1);
+  checkTasks();
+  renderTasks("open");
 }
 
 function createHeader() {
@@ -354,6 +363,11 @@ function renderTasks(tasklist) {
     tdDelete.setAttribute("class", "tddelete");
     const imgDelete = new Image();
     imgDelete.src = deleteIcon;
+    imgDelete.dataset.index = item._id;
+    imgDelete.addEventListener("click", (event) => {
+      let taskID = event.target.dataset.index;
+            deleteTask(taskID);
+    });
     tdDelete.appendChild(imgDelete);
     tr.appendChild(tdDelete);
 
