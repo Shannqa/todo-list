@@ -3,6 +3,10 @@ import { compareAsc, format } from "date-fns";
 import { allTasks, projects, priorities, addTask, checkTasks } from ".";
 import editIcon from './edit_icon.svg';
 import deleteIcon from './delete_icon.svg';
+import tasksAllImg from './tasks_all.svg';
+import tasksDoneImg from './tasks_done.svg';
+import tasksOpenImg from './tasks_open.svg';
+
 export { renderTasks, closeModal };
 
 const body = document.querySelector("body");
@@ -213,28 +217,44 @@ function createHeader() {
 }
 function createNav() {
   const nav = document.createElement("div");
-  const navUl = document.createElement("ul");
-  const navOpen = document.createElement("li");
-  const navAll = document.createElement("li");
-  const navFinished = document.createElement("li");
+  const navUl = document.createElement("div");
+  const navOpenD = document.createElement("div");
+  const navOpenS = document.createElement("span");
+  const navAllD = document.createElement("div");
+  const navAllS = document.createElement("span");
+  const navFinishedD = document.createElement("div");
+  const navFinishedS = document.createElement("span");
   const projectsDiv = document.createElement("div");
   const projectsUl = document.createElement("ul");
 
+  const tasksAllIcon = new Image();
+  tasksAllIcon.src = tasksAllImg;
+  const tasksOpenIcon = new Image();
+  tasksOpenIcon.src = tasksOpenImg;
+  const tasksDoneIcon = new Image();
+  tasksDoneIcon.src = tasksDoneImg;
+  
   nav.classList.add("navigation");
-  navOpen.textContent = "Open tasks";
-  navOpen.addEventListener("click", () => {currentView = "open"; renderTasks(currentView)});
-  navAll.textContent = "All tasks";
-  navAll.addEventListener("click", () => {currentView = "all"; renderTasks(currentView)});
-  navFinished.textContent = "Finished tasks";
-  navFinished.addEventListener("click", () => {currentView = "finished"; renderTasks(currentView)});
+  navOpenD.appendChild(tasksOpenIcon);
+  navOpenS.textContent = "Open tasks";
+  navOpenD.addEventListener("click", () => {currentView = "open"; renderTasks(currentView)});
+  navAllD.appendChild(tasksAllIcon);
+  navAllS.textContent = "All tasks";
+  navAllD.addEventListener("click", () => {currentView = "all"; renderTasks(currentView)});
+  navFinishedD.appendChild(tasksDoneIcon);
+  navFinishedS.textContent = "Finished tasks";
+  navFinishedD.addEventListener("click", () => {currentView = "finished"; renderTasks(currentView)});
 
   projectsDiv.textContent = "Projects";
   projectsUl.classList.add("projects-nav");
 
   nav.appendChild(navUl);
-  navUl.appendChild(navOpen);
-  navUl.appendChild(navAll);
-  navUl.appendChild(navFinished);
+  navOpenD.appendChild(navOpenS);
+  navUl.appendChild(navOpenD);
+  navAllD.appendChild(navAllS);
+  navUl.appendChild(navAllD);
+  navFinishedD.appendChild(navFinishedS);
+  navUl.appendChild(navFinishedD);
   projectsDiv.appendChild(projectsUl);
   nav.appendChild(projectsDiv);
 
