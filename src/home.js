@@ -7,6 +7,7 @@ export { renderTasks, closeModal };
 
 const body = document.querySelector("body");
 let editedTask = null;
+let currentView = "open";
 
 export default function createDom() {
   createHeader();
@@ -31,7 +32,7 @@ export default function createDom() {
   main.appendChild(addTaskBtn);
   main.appendChild(tableDiv);
   body.appendChild(main);
-  renderTasks("open");
+  renderTasks(currentView);
 }
 
 function createModal() {
@@ -135,7 +136,7 @@ function createModal() {
       editTask();
     }
   checkTasks();
-  renderTasks("open");
+  renderTasks(currentView);
   closeModal();
   event.preventDefault();
   });
@@ -210,19 +211,6 @@ function createHeader() {
   header.textContent = "To Do List";
   body.appendChild(header);
 }
-
-function renderOpen() {
-  renderTasks("open");
-}
-
-function renderAll() {
-  renderTasks("all");
-}
-
-function renderFinished() {
-  renderTasks("finished");
-}
-
 function createNav() {
   const nav = document.createElement("div");
   const navUl = document.createElement("ul");
@@ -234,11 +222,11 @@ function createNav() {
 
   nav.classList.add("navigation");
   navOpen.textContent = "Open tasks";
-  navOpen.addEventListener("click", renderOpen);
+  navOpen.addEventListener("click", () => {currentView = "open"; renderTasks(currentView)});
   navAll.textContent = "All tasks";
-  navAll.addEventListener("click", renderAll);
+  navAll.addEventListener("click", () => {currentView = "all"; renderTasks(currentView)});
   navFinished.textContent = "Finished tasks";
-  navFinished.addEventListener("click", renderFinished);
+  navFinished.addEventListener("click", () => {currentView = "finished"; renderTasks(currentView)});
 
   projectsDiv.textContent = "Projects";
   projectsUl.classList.add("projects-nav");

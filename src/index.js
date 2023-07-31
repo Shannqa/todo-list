@@ -1,6 +1,6 @@
 // git subtree push --prefix dist origin gh-pages
 
-import createDom, { renderTasks, closeModal } from "./home";
+import createDom from "./home";
 import "./style.css";
 export { allTasks, projects, priorities, addTask, checkTasks };
 
@@ -69,7 +69,7 @@ function getTaskID() {
   return randomID;
 }
 
-function addTask(event) {
+function addTask() {
   const form = document.querySelector("#form");
   const done = document.querySelector("#done");
   let newTask = new Task(
@@ -84,10 +84,6 @@ function addTask(event) {
   console.log(newTask);
 
   allTasks.push(newTask);
-  // checkTasks();
-  // renderTasks("open");
-  // closeModal();
-  // event.preventDefault();
 }
 
 function checkTasks() {
