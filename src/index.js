@@ -96,8 +96,8 @@ function addProject(name) {
   let newProject = new Project(name);
 }
 
-const defaultProject = new Project("Default");
-const workProject = new Project("Work");
+addProject("Default");
+addProject("Work");
 addProject("Bob");
 
 const defaultTask = new Task(

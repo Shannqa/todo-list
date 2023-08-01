@@ -55,6 +55,30 @@ body {
   cursor: pointer;
 }
 
+.projects-nav-label {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-style: italic;
+}
+.views-nav-label {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-style: italic;
+
+}
+
+.project-nav:hover {
+  color: orange;
+  cursor: pointer;
+}
+
+.peoject-nav:active {
+  color: red;
+  cursor: pointer;
+}
+
 .main {
   grid-area: main;
 }

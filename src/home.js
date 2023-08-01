@@ -6,8 +6,11 @@ import deleteIcon from './delete_icon.svg';
 import tasksAllImg from './tasks_all.svg';
 import tasksDoneImg from './tasks_done.svg';
 import tasksOpenImg from './tasks_open.svg';
-
+import projectsImg from './projects_icon.svg';
 export { renderTasks, closeModal };
+
+
+//bug - only one image shows for projects in nav
 
 const body = document.querySelector("body");
 let editedTask = null;
@@ -218,6 +221,7 @@ function createHeader() {
 function createNav() {
   const nav = document.createElement("div");
   const navUl = document.createElement("div");
+  const navView = document.createElement("div"); 
   const navOpenD = document.createElement("div");
   const navOpenS = document.createElement("span");
   const navAllD = document.createElement("div");
@@ -225,7 +229,8 @@ function createNav() {
   const navFinishedD = document.createElement("div");
   const navFinishedS = document.createElement("span");
   const projectsDiv = document.createElement("div");
-  const projectsUl = document.createElement("ul");
+  const projectsD = document.createElement("div");
+  const projectsUl = document.createElement("div");
 
   const tasksAllIcon = new Image();
   tasksAllIcon.src = tasksAllImg;
@@ -233,8 +238,12 @@ function createNav() {
   tasksOpenIcon.src = tasksOpenImg;
   const tasksDoneIcon = new Image();
   tasksDoneIcon.src = tasksDoneImg;
-  
+ 
   nav.classList.add("navigation");
+  navView.textContent = "Views";
+  navView.classList.add("views-nav-label");
+  nav.appendChild(navView);
+
   navOpenD.appendChild(tasksOpenIcon);
   navOpenS.textContent = "Open tasks";
   navOpenD.addEventListener("click", () => {currentView = "open"; renderTasks(currentView)});
@@ -245,9 +254,11 @@ function createNav() {
   navFinishedS.textContent = "Finished tasks";
   navFinishedD.addEventListener("click", () => {currentView = "finished"; renderTasks(currentView)});
 
-  projectsDiv.textContent = "Projects";
+  projectsD.textContent = "Projects";
+  projectsD.classList.add("projects-nav-label");
   projectsUl.classList.add("projects-nav");
 
+  nav.appendChild(navView);
   nav.appendChild(navUl);
   navOpenD.appendChild(navOpenS);
   navUl.appendChild(navOpenD);
@@ -255,6 +266,7 @@ function createNav() {
   navUl.appendChild(navAllD);
   navFinishedD.appendChild(navFinishedS);
   navUl.appendChild(navFinishedD);
+  projectsDiv.appendChild(projectsD);
   projectsDiv.appendChild(projectsUl);
   nav.appendChild(projectsDiv);
 
@@ -386,12 +398,20 @@ function renderTasks(tasklist) {
 }
 
 function renderProjNav() {
-  const ul = document.querySelector(".projects-nav");
-  projects.forEach((item) => {
-    const li = document.createElement("li");
-    li.textContent = `${item.name}`;
-    ul.appendChild(li);
-  });
+  const projUl = document.querySelector(".projects-nav");
+  const projectsIcon = new Image();
+  projectsIcon.src = projectsImg;
+
+
+  for (let i = 0; i < projects.length; i++) {
+    const projD = document.createElement("div");
+    const projS = document.createElement("span");
+    projD.classList.add("project-nav");
+    projS.textContent = `${projects[i].name}`;
+    projD.appendChild(projectsIcon.cloneNode());
+    projD.appendChild(projS);
+    projUl.appendChild(projD);
+  };
 }
 
 
