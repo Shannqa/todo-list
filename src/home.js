@@ -302,18 +302,18 @@ function renderTasks(tasklist) {
 
   const tableDiv = document.querySelector(".tableDiv");
   removeTable();
-  const tableLabel = document.createElement("div");
-  tableLabel.setAttribute("class", "tablelabel");
+  const containerLabel = document.createElement("div");
+  containerLabel.setAttribute("class", "tablelabel");
 
   let list;
   if (tasklist === "open") {
-    tableLabel.textContent = "Open tasks";
+    containerLabel.textContent = "Open tasks";
     list = allTasks.filter((task) => task.done === "false" || task.done === false);
   } else if (tasklist === "finished") {
-    tableLabel.textContent = "Finished tasks";
+    containerLabel.textContent = "Finished tasks";
     list = allTasks.filter((task) => task.done === "true" || task.done === true);
   } else if (tasklist === "all") {
-    tableLabel.textContent = "All tasks";
+    containerLabel.textContent = "All tasks";
     list = allTasks;
   }
 
@@ -324,17 +324,23 @@ function renderTasks(tasklist) {
     return dateA - dateB;
   });
 
-  const table = document.createElement("table");
+  //list of tasks
+  const container = document.createElement("div");
+  container.classList.add("container");
   
   list.forEach((item) => {
-    const tr = document.createElement("tr");
-    tr.dataset.index = item._id;
+    const taskRow = document.createElement("div");
+    taskRow.classList.add("task-row");
+    taskRow.dataset.index = item._id;
 
+    //left column
+    const taskLeft = document.createElement("div");
+    taskLeft.classList.add("left-right");
     //done state column
-    const tdCheck = document.createElement("td");
+    const taskCheck = document.createElement("div");
     const doneCheck = document.createElement("input");
     doneCheck.setAttribute("type", "checkbox");
-    doneCheck.setAttribute("class", "taskcheck");
+    doneCheck.setAttribute("class", "task-check");
     doneCheck.addEventListener("click", function changeDoneState() {
       if (this.checked) {
         item[done] = "true";
@@ -347,26 +353,29 @@ function renderTasks(tasklist) {
     } else {
       doneCheck.checked = false;
     };
-    tdCheck.appendChild(doneCheck);
-    tr.appendChild(tdCheck);
+    taskCheck.appendChild(doneCheck);
+    taskLeft.appendChild(taskCheck);
 
     //title column
-    const tdTitle = document.createElement("td");
-    tdTitle.setAttribute("class", "tasktitle");
-    tdTitle.textContent = item.title;
-    tr.appendChild(tdTitle);
+    const taskTitle = document.createElement("div");
+    taskTitle.setAttribute("class", "task-title");
+    taskTitle.textContent = item.title;
+    taskLeft.appendChild(taskTitle);
 
+    //right column
+    const taskRight = document.createElement("div");
+    taskRight.classList.add("left-right");
     //date column
-    const tdDate = document.createElement("td")
-    tdDate.setAttribute("class", "tddate");
+    const taskDate = document.createElement("div")
+    taskDate.setAttribute("class", "task-date");
     //human-readable date
     let humanDate = format(new Date(item.dueDate), "dd MMM");
-    tdDate.textContent = humanDate;
-    tr.appendChild(tdDate);
+    taskDate.textContent = humanDate;
+    taskRight.appendChild(taskDate);
 
     //edit column
-    const tdEdit = document.createElement("td");
-    tdEdit.setAttribute("class", "tdedit");
+    const taskEdit = document.createElement("div");
+    taskEdit.setAttribute("class", "task-edit");
     const imgEdit = new Image();
     imgEdit.src = editIcon;
     imgEdit.dataset.index = item._id;
@@ -374,12 +383,12 @@ function renderTasks(tasklist) {
       let taskID = event.target.dataset.index;
             showModal(taskID);
     });
-    tdEdit.appendChild(imgEdit);
-    tr.appendChild(tdEdit);
+    taskEdit.appendChild(imgEdit);
+    taskRight.appendChild(taskEdit);
 
     //delete column
-    const tdDelete = document.createElement("td");
-    tdDelete.setAttribute("class", "tddelete");
+    const taskDelete = document.createElement("div");
+    taskDelete.setAttribute("class", "task-delete");
     const imgDelete = new Image();
     imgDelete.src = deleteIcon;
     imgDelete.dataset.index = item._id;
@@ -387,13 +396,17 @@ function renderTasks(tasklist) {
       let taskID = event.target.dataset.index;
             deleteTask(taskID);
     });
-    tdDelete.appendChild(imgDelete);
-    tr.appendChild(tdDelete);
+    taskDelete.appendChild(imgDelete);
+    taskRight.appendChild(taskDelete);
 
-    table.appendChild(tr);    
+    taskRow.appendChild(taskLeft);
+    taskRow.appendChild(taskRight);
+    container.appendChild(taskRow);
   });
-    tableDiv.appendChild(tableLabel);
-    tableDiv.appendChild(table);
+
+
+    tableDiv.appendChild(containerLabel);
+    tableDiv.appendChild(container);
 }
 
 function renderProjNav() {

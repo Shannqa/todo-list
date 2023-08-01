@@ -126,54 +126,58 @@ button {
   text-decoration: underline;
 }
 
-table {
-  border: 1px var(--accent) solid;
-  border-collapse: collapse;
-  color: #000;
-  background-color: rgb(249 251 228);
+.container {
   width: 80%;
+  min-width: fit-content;
 }
 
-th {
-  border: 1px var(--accent) solid;
-  padding: 3px;
-}
-td {
-  border: 1px var(--accent) solid;
-  padding: 4px 5px;
+.task-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(249 251 228);
 }
 
-table .taskcheck {
+.left-right {
+  display: flex;
+  align-items: center;
+}
+
+.task-check {
   width: 1.1rem;
   height: 1.1rem;
+  padding: 5px;
 }
 
-table .taskcheck:hover {
+.task-check:hover {
   background-color: orange;
   cursor: pointer;
 }
-
-table .tasktitle {
-  width: 80%;
+.task-date {
+  padding: 5px;
+}
+.task-title {
+  padding: 5px;
 }
 
-.tdedit img {
+.task-edit img {
   height: 1.2rem;
   padding: 5px;
   transition: background-color 300ms ease-in-out;
 }
-.tdedit img:hover {
+.task-edit img:hover {
   cursor: pointer;
   background-color: orange;
 }
 
-.tddelete img {
+.task-delete img {
   height: 1.2rem;
   padding: 5px;
   transition: background-color 300ms ease-in-out;
 }
 
-.tddelete img:hover {
+.task-delete img:hover {
   cursor: pointer;
   background-color: orange;
 }
