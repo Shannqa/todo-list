@@ -9,9 +9,6 @@ import tasksOpenImg from './tasks_open.svg';
 import projectsImg from './projects_icon.svg';
 export { renderTasks, closeModal };
 
-
-//bug - only one image shows for projects in nav
-
 const body = document.querySelector("body");
 let editedTask = null;
 let currentView = "open";
@@ -29,14 +26,6 @@ export default function createDom() {
   const tableDiv = document.createElement("div");
   tableDiv.classList.add("tableDiv");
 
-  const addTaskBtn = document.createElement("button");
-  addTaskBtn.addEventListener("click", () => {
-    showModal();
-  });
-  addTaskBtn.classList.add("add-button");
-  addTaskBtn.textContent = "+";
-
-  main.appendChild(addTaskBtn);
   main.appendChild(tableDiv);
   body.appendChild(main);
   renderTasks(currentView);
@@ -218,6 +207,7 @@ function createHeader() {
   header.textContent = "To Do List";
   body.appendChild(header);
 }
+
 function createNav() {
   const nav = document.createElement("div");
   const navUl = document.createElement("div");
@@ -269,6 +259,15 @@ function createNav() {
   projectsDiv.appendChild(projectsD);
   projectsDiv.appendChild(projectsUl);
   nav.appendChild(projectsDiv);
+
+  // add task button
+  const addTaskBtn = document.createElement("button");
+  addTaskBtn.addEventListener("click", () => {
+    showModal();
+  });
+  addTaskBtn.classList.add("add-button");
+  addTaskBtn.textContent = "+";
+  nav.appendChild(addTaskBtn);
 
   body.appendChild(nav);
 }

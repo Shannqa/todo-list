@@ -2,7 +2,7 @@
   --background: #fff;
   /* --background2: ;
 --background3: ; */
-  --accent: rgb(94, 137, 255);
+  --accent: rgb(249 251 228);
   /* --accent2: ;
 --accent3: ; */
 
@@ -21,6 +21,7 @@ body {
     "footer footer";
   margin: 0;
   grid-template-rows: 4rem 1fr;
+  grid-template-columns: auto 1fr;
   font-size: 1.2rem;
   height: 100vh;
   }
@@ -81,10 +82,7 @@ body {
 
 .main {
   grid-area: main;
-}
-
-.add-button {
-  margin-right: 0 auto;
+  margin-left: 2rem;
 }
 
 #form {
@@ -105,21 +103,35 @@ button {
   border: none;
   width: 50px;
   height: 50px;
-  background-color: var(--accent);
-  color: var(--font3);
+  background-color: rgb(255 235 108);
+  margin: 20px 5px;
+  font-weight: bold;
+  font-size: 2rem;
+  box-shadow: 3px 3px 3px #6c6767;
+  transition: background-color 300ms ease-in-out;
+  cursor: pointer;
 }
+
+.add-button:hover {
+  background-color: orange;
+}
+
 
 /* Task table */
 
 .tablelabel {
-  margin-bottom: 0.8rem;
-  font-size: large;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 table {
   border: 1px var(--accent) solid;
   border-collapse: collapse;
-  color: var(--font2);
+  color: #000;
+  background-color: rgb(249 251 228);
+  width: 80%;
 }
 
 th {
@@ -132,19 +144,32 @@ td {
 }
 
 table .taskcheck {
-  width: 1rem;
+  width: 30px;
 }
 
 table .tasktitle {
-  width: 600px;
+  width: 80%;
 }
 
 .tdedit img {
-  width: 1rem;
+  height: 1.2rem;
+  padding: 5px;
+  transition: background-color 300ms ease-in-out;
+}
+.tdedit img:hover {
+  cursor: pointer;
+  background-color: orange;
 }
 
 .tddelete img {
-  width: 1rem;
+  height: 1.2rem;
+  padding: 5px;
+  transition: background-color 300ms ease-in-out;
+}
+
+.tddelete img:hover {
+  cursor: pointer;
+  background-color: orange;
 }
 
 /* Modal window */
