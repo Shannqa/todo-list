@@ -155,10 +155,19 @@ button {
   cursor: pointer;
 }
 .task-date {
-  padding: 5px;
+  padding: 5px 5px 10px 5px;
 }
+
 .task-title {
   padding: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out;
+}
+
+.task-title:hover {
+  background-color: orange;
+
 }
 
 .task-edit img {
@@ -180,6 +189,19 @@ button {
 .task-delete img:hover {
   cursor: pointer;
   background-color: orange;
+}
+
+.details-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(255 255 249);
+  row-gap: 0.8rem;
+}
+
+.details-row-hidden {
+  display: none;
 }
 
 /* Modal window */

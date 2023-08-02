@@ -332,7 +332,7 @@ function renderTasks(tasklist) {
     const taskRow = document.createElement("div");
     taskRow.classList.add("task-row");
     taskRow.dataset.index = item._id;
-
+    
     //left column
     const taskLeft = document.createElement("div");
     taskLeft.classList.add("left-right");
@@ -360,8 +360,11 @@ function renderTasks(tasklist) {
     const taskTitle = document.createElement("div");
     taskTitle.setAttribute("class", "task-title");
     taskTitle.textContent = item.title;
+    taskTitle.addEventListener("click", () => {
+      detailsRow.classList.toggle("details-row-hidden");
+    });
     taskLeft.appendChild(taskTitle);
-
+    
     //right column
     const taskRight = document.createElement("div");
     taskRight.classList.add("left-right");
@@ -402,6 +405,33 @@ function renderTasks(tasklist) {
     taskRow.appendChild(taskLeft);
     taskRow.appendChild(taskRight);
     container.appendChild(taskRow);
+
+    //details row
+    const detailsRow = document.createElement("div");
+    const detailsTitle = document.createElement("div");
+    const detailsDate = document.createElement("div");
+    const detailsDescription = document.createElement("div");
+    const detailsPriority = document.createElement("div");
+    const detailsProject = document.createElement("div");
+    const detailsNotes = document.createElement("div");
+
+    detailsRow.classList.add("details-row");
+    detailsRow.classList.add("details-row-hidden");
+    detailsTitle.textContent = "Title: " + item.title;
+    detailsDate.textContent = "Due date: " + item.dueDate;
+    
+    detailsDescription.textContent = "Description: " + item.description;
+    detailsPriority.textContent = "Priority: " + item.priority;
+    detailsProject.textContent = "Project: " + item.project;
+    detailsNotes.textContent = "Notes: " + item.notes;
+
+    detailsRow.appendChild(detailsTitle);
+    detailsRow.appendChild(detailsDate);    
+    detailsRow.appendChild(detailsPriority);
+    detailsRow.appendChild(detailsProject);
+    detailsRow.appendChild(detailsDescription);
+    detailsRow.appendChild(detailsNotes);
+    container.appendChild(detailsRow);
   });
 
 
