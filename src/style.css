@@ -170,6 +170,38 @@ button {
 
 }
 
+.task-date {
+  padding: 5px;
+}
+.task-priority-div {
+  padding: 3px 8px;
+} 
+.task-priority {
+  padding: 5px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.task-priority-high {
+  color: red;
+  border: 2px solid red;
+  border-radius: 10px;
+}
+
+.task-priority-medium {
+  color: orange;
+  border: 2px solid orange;
+  border-radius: 10px;
+
+}
+
+.task-priority-low {
+  color: green;
+  border: 2px solid green;
+  border-radius: 10px;
+}
+
 .task-edit img {
   height: 1.2rem;
   padding: 5px;

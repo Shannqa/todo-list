@@ -370,15 +370,30 @@ function renderTasks(tasklist) {
     taskRight.classList.add("left-right");
     //date column
     const taskDate = document.createElement("div")
-    taskDate.setAttribute("class", "task-date");
+    taskDate.classList.add("task-date");
     //human-readable date
     let humanDate = format(new Date(item.dueDate), "dd MMM");
     taskDate.textContent = humanDate;
     taskRight.appendChild(taskDate);
+    //priority column
+    const taskPriorityDiv = document.createElement("div");
+    taskPriorityDiv.classList.add("task-priority-div");
+    const taskPriority = document.createElement("div");
+    taskPriority.textContent = item.priority;
+    taskPriority.classList.add("task-priority");
+    if (item.priority == "High") {
+      taskPriority.classList.add("task-priority-high");
+    } else if (item.priority == "Medium") {
+      taskPriority.classList.add("task-priority-medium");
+    } else {
+      taskPriority.classList.add("task-priority-low");
+    }
+    taskPriorityDiv.appendChild(taskPriority);
+    taskRight.appendChild(taskPriorityDiv);
 
     //edit column
     const taskEdit = document.createElement("div");
-    taskEdit.setAttribute("class", "task-edit");
+    taskEdit.classList.add("task-edit");
     const imgEdit = new Image();
     imgEdit.src = editIcon;
     imgEdit.dataset.index = item._id;
@@ -391,7 +406,7 @@ function renderTasks(tasklist) {
 
     //delete column
     const taskDelete = document.createElement("div");
-    taskDelete.setAttribute("class", "task-delete");
+    taskDelete.classList.add("task-delete");
     const imgDelete = new Image();
     imgDelete.src = deleteIcon;
     imgDelete.dataset.index = item._id;
