@@ -343,12 +343,15 @@ function renderTasks(tasklist) {
     doneCheck.setAttribute("class", "task-check");
     doneCheck.addEventListener("click", function changeDoneState() {
       if (this.checked) {
-        item[done] = "true";
+        item.done = true;
+        taskRow.classList.add("task-done");
       } else {
-        item[done] = "false";
+        item.done = false;
+        taskRow.classList.remove("task-done");
       }
+      checkTasks();
     });
-    if (item[done] === "true" || item[done] === true) {
+    if (item.done == true) {
       doneCheck.checked = true;
     } else {
       doneCheck.checked = false;

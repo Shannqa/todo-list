@@ -173,6 +173,11 @@ button {
 .task-date {
   padding: 5px;
 }
+
+.task-done {
+  text-decoration: line-through;
+}
+
 .task-priority-div {
   padding: 3px 8px;
 } 
