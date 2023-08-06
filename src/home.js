@@ -9,6 +9,15 @@ import tasksOpenImg from './tasks_open.svg';
 import projectsImg from './projects_icon.svg';
 export { renderTasks, closeModal };
 
+//to do:
+//footer
+//style add/edit task modal
+//change the font
+//adding/removing projects. might add add project to the add task modal
+//date should be required, set up default date for today. add constraint validation
+//mobile view
+
+
 const body = document.querySelector("body");
 let editedTask = null;
 let currentView = "open";
@@ -34,17 +43,30 @@ export default function createDom() {
 function createModal() {
   /* Modal window for creating a new task */
   const modalWindow = document.createElement("div");
-    
+  modalWindow.classList.add("modal");
+  modalWindow.style.display = "none";  
+
+  const modalTop = document.createElement("div");
+  modalTop.classList.add("modal-top");
+
+  const modalLabel = document.createElement("div");
+  modalLabel.textContent = "Add a Task";
+  modalLabel.classList.add("modal-label");
+  modalTop.appendChild(modalLabel);
+
   const closeBtn = document.createElement("button");
   closeBtn.classList.add("close-btn");
+  closeBtn.textContent = "X";
   closeBtn.addEventListener("click", closeModal);
-  modalWindow.appendChild(closeBtn);
+  modalTop.appendChild(closeBtn);
+
+  modalWindow.appendChild(modalTop);
 
   const form = document.createElement("form");
-
   form.setAttribute("id", "form");
-  modalWindow.classList.add("modal");
-  modalWindow.style.display = "none";
+
+  const modalLeft = document.createElement("div");
+  const modalRight = document.createElement("div");
 
   //title
   const inputTitle = document.createElement("input");
@@ -52,17 +74,8 @@ function createModal() {
   const labelTitle = document.createElement("label");
   labelTitle.setAttribute("for", "title");
   labelTitle.textContent = "Title";
-  form.appendChild(labelTitle);
-  form.appendChild(inputTitle);
-
-  //description
-  const inputDesc = document.createElement("input");
-  inputDesc.setAttribute("id", "description");
-  const labelDesc = document.createElement("label");
-  labelDesc.setAttribute("for", "description");
-  labelDesc.textContent = "Description";
-  form.appendChild(labelDesc);
-  form.appendChild(inputDesc);
+  modalLeft.appendChild(labelTitle);
+  modalLeft.appendChild(inputTitle);
 
   //due date
   const inputDue = document.createElement("input");
@@ -71,8 +84,17 @@ function createModal() {
   const labelDue = document.createElement("label");
   labelDue.setAttribute("for", "dueDate");
   labelDue.textContent = "Due Date";
-  form.appendChild(labelDue);
-  form.appendChild(inputDue);
+  modalLeft.appendChild(labelDue);
+  modalLeft.appendChild(inputDue);
+
+  //description
+  const inputDesc = document.createElement("input");
+  inputDesc.setAttribute("id", "description");
+  const labelDesc = document.createElement("label");
+  labelDesc.setAttribute("for", "description");
+  labelDesc.textContent = "Description";
+  modalLeft.appendChild(labelDesc);
+  modalLeft.appendChild(inputDesc);
 
   //priority
   const selectPriority = document.createElement("select");
@@ -86,8 +108,8 @@ function createModal() {
   const labelPriority = document.createElement("label");
   labelPriority.setAttribute("for", "priority");
   labelPriority.textContent = "Priority";
-  form.appendChild(labelPriority);
-  form.appendChild(selectPriority);
+  modalRight.appendChild(labelPriority);
+  modalRight.appendChild(selectPriority);
 
   //project
   const selectProject = document.createElement("select");
@@ -101,19 +123,8 @@ function createModal() {
   const labelProject = document.createElement("label");
   labelProject.setAttribute("for", "project");
   labelProject.textContent = "Project";
-  form.appendChild(labelProject);
-  form.appendChild(selectProject);
-
-  //checklist
-  const inputCheck = document.createElement("input");
-  inputCheck.setAttribute("id", "done");
-  inputCheck.setAttribute("type", "checkbox");
-  inputCheck.setAttribute("value", "false");
-  const labelCheck = document.createElement("label");
-  labelCheck.setAttribute("for", "done");
-  labelCheck.textContent = "Done?";
-  form.appendChild(labelCheck);
-  form.appendChild(inputCheck);
+  modalRight.appendChild(labelProject);
+  modalRight.appendChild(selectProject);
 
   //notes
   const inputNotes = document.createElement("input");
@@ -121,10 +132,22 @@ function createModal() {
   const labelNotes = document.createElement("label");
   labelNotes.setAttribute("for", "notes");
   labelNotes.textContent = "Additional notes";
-  form.appendChild(labelNotes);
-  form.appendChild(inputNotes);
+  modalRight.appendChild(labelNotes);
+  modalRight.appendChild(inputNotes);
+
+    //checklist
+  // const inputCheck = document.createElement("input");
+  // inputCheck.setAttribute("id", "done");
+  // inputCheck.setAttribute("type", "checkbox");
+  // inputCheck.setAttribute("value", "false");
+  // const labelCheck = document.createElement("label");
+  // labelCheck.setAttribute("for", "done");
+  // labelCheck.textContent = "Done?";
+  // modalRight.appendChild(labelCheck);
+  // modalRight.appendChild(inputCheck);
 
   const submitBtn = document.createElement("button");
+  submitBtn.classList.add("submit-button");
   submitBtn.addEventListener("click", (event) => {
     if (editedTask == null) {
       addTask();
@@ -138,8 +161,9 @@ function createModal() {
   });
   submitBtn.setAttribute("id", "submit");
   submitBtn.textContent = "Submit";
+  form.appendChild(modalLeft);
+  form.appendChild(modalRight);  
   form.appendChild(submitBtn);
-
   modalWindow.appendChild(form);
 
   body.appendChild(modalWindow);
@@ -147,7 +171,7 @@ function createModal() {
 
 function showModal(taskID) {
   const modal = document.querySelector(".modal");
-  modal.style.display = "flex";
+  modal.style.display = "grid";
   if (typeof taskID === "string") {
     renderEditedTask(taskID);
   }
