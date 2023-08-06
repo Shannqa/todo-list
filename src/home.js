@@ -1,6 +1,6 @@
 // import { formatDuration } from "date-fns";
 import { compareAsc, format } from "date-fns";
-import { allTasks, projects, priorities, addTask, checkTasks } from ".";
+import { allTasks, projects, priorities, addTask, checkTasks, addProject } from ".";
 import editIcon from './edit_icon.svg';
 import deleteIcon from './delete_icon.svg';
 import tasksAllImg from './tasks_all.svg';
@@ -11,7 +11,6 @@ export { renderTasks, closeModal };
 
 //to do:
 //footer
-//style add/edit task modal
 //change the font
 //adding/removing projects. might add add project to the add task modal
 //date should be required, set up default date for today. add constraint validation
@@ -48,12 +47,23 @@ function createModal() {
 
   const modalTop = document.createElement("div");
   modalTop.classList.add("modal-top");
+  const modalTopLeft = document.createElement("div");
+  modalTopLeft.classList.add("modal-top-left");
 
   const modalLabel = document.createElement("div");
   modalLabel.textContent = "Add a Task";
+  modalLabel.addEventListener("click", showModal)
   modalLabel.classList.add("modal-label");
-  modalTop.appendChild(modalLabel);
+  modalTopLeft.appendChild(modalLabel);
 
+  const modalProjLabel = document.createElement("div");
+  modalProjLabel.textContent = "Add a Project";
+  modalProjLabel.classList.add("modal-proj-label");
+  modalProjLabel.addEventListener("click", renderNewProject)
+  modalTopLeft.appendChild(modalProjLabel);
+
+  modalTop.appendChild(modalTopLeft);
+  
   const closeBtn = document.createElement("button");
   closeBtn.classList.add("close-btn");
   closeBtn.textContent = "X";
@@ -62,6 +72,7 @@ function createModal() {
 
   modalWindow.appendChild(modalTop);
 
+  //task's form
   const form = document.createElement("form");
   form.setAttribute("id", "form");
 
@@ -168,16 +179,71 @@ function createModal() {
   form.appendChild(submitBtn);
   modalWindow.appendChild(form);
 
+  //project's form
+  const projectForm = document.createElement("form");
+  projectForm.setAttribute("id", "project-form");
+
+  const inputNewProject = document.createElement("input");
+  inputNewProject.setAttribute("id", "newProjectName");
+  const labelNewProject = document.createElement("label");
+  labelNewProject.setAttribute("for", "newProjectName");
+  labelNewProject.textContent = "Project's Name:";
+  projectForm.appendChild(labelNewProject);
+  projectForm.appendChild(inputNewProject);
+
+  const submitProjBtn = document.createElement("button");
+  submitProjBtn.classList.add("submit-button");
+  submitProjBtn.addEventListener("click", (event) => {
+  addProject();
+  renderProjNav();
+  closeModal();
+  event.preventDefault();
+  });
+  submitProjBtn.setAttribute("id", "submitProj");
+  submitProjBtn.textContent = "Submit";
+ 
+  projectForm.appendChild(submitProjBtn);
+
+  modalWindow.appendChild(projectForm);
   body.appendChild(modalWindow);
 }
 
+function renderNewProject() {
+  const form = document.querySelector("#form");
+  form.style.display = "none";
+  const modalProjLabel = document.querySelector(".modal-proj-label");
+  const modalLabel = document.querySelector(".modal-label");
+  modalLabel.classList.remove("modal-label-active");
+  modalProjLabel.classList.add("modal-label-active");
+  modalLabel.classList.add("modal-label-inactive");
+  modalProjLabel.classList.remove("modal-label-inactive");
+  const projectForm = document.querySelector("#project-form");
+  projectForm.style.display = "grid";
+}
+ 
 function showModal(taskID) {
   const modal = document.querySelector(".modal");
+  const modalProjLabel = document.querySelector(".modal-proj-label");
+  const modalLabel = document.querySelector(".modal-label");
+  modalLabel.classList.add("modal-label-active");
+  modalProjLabel.classList.remove("modal-label-active");
+  modalLabel.classList.remove("modal-label-inactive");
+  modalProjLabel.classList.add("modal-label-inactive");
   modal.style.display = "grid";
+  form.style.display = "grid";
+  const projectForm = document.querySelector("#project-form");
+  projectForm.style.display = "none";
+
   if (typeof taskID === "string") {
     renderEditedTask(taskID);
+  } else {
+    renderEmptyTask();
   }
+}
 
+function renderEmptyTask() {
+  let modalLabel = document.querySelector(".modal-label")
+  modalLabel.textContent = "Add a Task"
 }
 
 function renderEditedTask(id) {
@@ -190,6 +256,8 @@ function renderEditedTask(id) {
     let project = document.getElementById("project");
     let done = document.getElementById("done");
     let notes = document.getElementById("notes");
+    let modalLabel = document.querySelector(".modal-label")
+    modalLabel.textContent = "Edit a Task"
     title.value = searchedTask.title;
     description.value = searchedTask.description;
     dueDate.value = searchedTask.dueDate;
@@ -308,12 +376,14 @@ function closeModal() {
   let project = document.getElementById("project");
   let done = document.getElementById("done");
   let notes = document.getElementById("notes");
+  let newProjectName = document.getElementById("newProjectName");
   title.value = "";
   description.value = "";
   dueDate.value = "";
   project.value = "Default";
   done.checked = false;
   notes.value = "";
+  newProjectName.value = ""; 
 }
 
 /* List of tasks */
@@ -484,7 +554,11 @@ function renderTasks(tasklist) {
 }
 
 function renderProjNav() {
-  const projUl = document.querySelector(".projects-nav");
+    const projUl = document.querySelector(".projects-nav");
+  while (projUl.lastChild) {
+    projUl.removeChild(projUl.lastChild);
+  }
+
   const projectsIcon = new Image();
   projectsIcon.src = projectsImg;
 

@@ -2,7 +2,7 @@
 
 import createDom from "./home";
 import "./style.css";
-export { allTasks, projects, priorities, addTask, checkTasks };
+export { allTasks, projects, priorities, addTask, checkTasks, addProject };
 
 const allTasks = [];
 const projects = [];
@@ -92,13 +92,21 @@ function checkTasks() {
 }
 
 
-function addProject(name) {
-  let newProject = new Project(name);
+function addProject() {
+  const form = document.querySelector("#project-form");
+  let newProject = new Project(newProjectName.value);
+  console.log(newProject);
 }
 
-addProject("Default");
-addProject("Work");
-addProject("Bob");
+const defaultProject = new Project(
+  "Default"
+);
+
+// projects.push(defaultProject);
+
+// addProject("Default");
+// addProject("Work");
+// addProject("Bob");
 
 const defaultTask = new Task(
   "brush teeth",
