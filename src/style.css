@@ -249,7 +249,7 @@ button {
   z-index: 1;
   left: 30%;
   top: 10%;
-  padding: 10px 30px;
+  padding: 20px 30px;
   background-color: rgb(249 251 228);;
   box-shadow: 5px 5px 5px #6c6767;
 }
@@ -313,3 +313,4 @@ button {
 .close-btn:hover, .submit-button:hover {
   background-color: orange;
 }
+

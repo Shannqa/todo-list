@@ -73,7 +73,7 @@ function createModal() {
   inputTitle.setAttribute("id", "title");
   const labelTitle = document.createElement("label");
   labelTitle.setAttribute("for", "title");
-  labelTitle.textContent = "Title";
+  labelTitle.textContent = "Title:";
   modalLeft.appendChild(labelTitle);
   modalLeft.appendChild(inputTitle);
 
@@ -83,16 +83,16 @@ function createModal() {
   inputDue.setAttribute("type", "date");
   const labelDue = document.createElement("label");
   labelDue.setAttribute("for", "dueDate");
-  labelDue.textContent = "Due Date";
+  labelDue.textContent = "Due Date:";
   modalLeft.appendChild(labelDue);
   modalLeft.appendChild(inputDue);
 
   //description
-  const inputDesc = document.createElement("input");
+  const inputDesc = document.createElement("textarea");
   inputDesc.setAttribute("id", "description");
   const labelDesc = document.createElement("label");
   labelDesc.setAttribute("for", "description");
-  labelDesc.textContent = "Description";
+  labelDesc.textContent = "Description:";
   modalLeft.appendChild(labelDesc);
   modalLeft.appendChild(inputDesc);
 
@@ -107,7 +107,7 @@ function createModal() {
   });
   const labelPriority = document.createElement("label");
   labelPriority.setAttribute("for", "priority");
-  labelPriority.textContent = "Priority";
+  labelPriority.textContent = "Priority:";
   modalRight.appendChild(labelPriority);
   modalRight.appendChild(selectPriority);
 
@@ -122,29 +122,32 @@ function createModal() {
   });
   const labelProject = document.createElement("label");
   labelProject.setAttribute("for", "project");
-  labelProject.textContent = "Project";
+  labelProject.textContent = "Project:";
   modalRight.appendChild(labelProject);
   modalRight.appendChild(selectProject);
 
   //notes
-  const inputNotes = document.createElement("input");
+  const inputNotes = document.createElement("textarea");
   inputNotes.setAttribute("id", "notes");
   const labelNotes = document.createElement("label");
   labelNotes.setAttribute("for", "notes");
-  labelNotes.textContent = "Additional notes";
+  labelNotes.textContent = "Additional notes:";
   modalRight.appendChild(labelNotes);
   modalRight.appendChild(inputNotes);
 
-    //checklist
-  // const inputCheck = document.createElement("input");
-  // inputCheck.setAttribute("id", "done");
-  // inputCheck.setAttribute("type", "checkbox");
-  // inputCheck.setAttribute("value", "false");
-  // const labelCheck = document.createElement("label");
-  // labelCheck.setAttribute("for", "done");
-  // labelCheck.textContent = "Done?";
-  // modalRight.appendChild(labelCheck);
-  // modalRight.appendChild(inputCheck);
+  form.appendChild(modalLeft);
+  form.appendChild(modalRight);  
+
+  //checklist
+  const inputCheck = document.createElement("input");
+  inputCheck.setAttribute("id", "done");
+  inputCheck.setAttribute("type", "checkbox");
+  inputCheck.setAttribute("value", "false");
+  const labelCheck = document.createElement("label");
+  labelCheck.setAttribute("for", "done");
+  labelCheck.textContent = "Task complete?";
+  form.appendChild(labelCheck);
+  form.appendChild(inputCheck);
 
   const submitBtn = document.createElement("button");
   submitBtn.classList.add("submit-button");
@@ -161,8 +164,7 @@ function createModal() {
   });
   submitBtn.setAttribute("id", "submit");
   submitBtn.textContent = "Submit";
-  form.appendChild(modalLeft);
-  form.appendChild(modalRight);  
+ 
   form.appendChild(submitBtn);
   modalWindow.appendChild(form);
 
