@@ -36,6 +36,9 @@ body {
 
 .navigation {
   grid-area: nav;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: rgb(249 251 228);
   width: fit-content;
   padding: 0.5rem 1.5rem 0.5rem 0.5rem;
@@ -78,6 +81,23 @@ body {
 .project-nav:active {
   color: red;
   cursor: pointer;
+}
+
+
+.footer {
+  font-size: 0.9rem;
+}
+
+.footer a, .footer a:visited {
+  color: black;
+}
+
+.footer a:hover {
+  color: orange;
+}
+
+.footer a:active {
+  color: red;
 }
 
 .main {

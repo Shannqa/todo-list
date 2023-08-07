@@ -10,11 +10,11 @@ import projectsImg from './projects_icon.svg';
 export { renderTasks, closeModal };
 
 //to do:
-//footer
 //change the font
 //date should be required, set up default date for today. add constraint validation
 //mobile view
 //get data from a cookie
+//fix issues with divs changing sizes depending on the content
 
 
 const body = document.querySelector("body");
@@ -315,6 +315,8 @@ function createHeader() {
 
 function createNav() {
   const nav = document.createElement("div");
+  const navTop = document.createElement("div");
+  const navBottom = document.createElement("div");
   const navUl = document.createElement("div");
   const navView = document.createElement("div"); 
   const navOpenD = document.createElement("div");
@@ -337,7 +339,8 @@ function createNav() {
   nav.classList.add("navigation");
   navView.textContent = "Views";
   navView.classList.add("views-nav-label");
-  nav.appendChild(navView);
+  
+  navTop.appendChild(navView);
 
   navOpenD.appendChild(tasksOpenIcon);
   navOpenS.textContent = "Open tasks";
@@ -353,8 +356,7 @@ function createNav() {
   projectsD.classList.add("projects-nav-label");
   projectsUl.classList.add("projects-nav");
 
-  nav.appendChild(navView);
-  nav.appendChild(navUl);
+  navTop.appendChild(navUl);
   navOpenD.appendChild(navOpenS);
   navUl.appendChild(navOpenD);
   navAllD.appendChild(navAllS);
@@ -363,7 +365,7 @@ function createNav() {
   navUl.appendChild(navFinishedD);
   projectsDiv.appendChild(projectsD);
   projectsDiv.appendChild(projectsUl);
-  nav.appendChild(projectsDiv);
+  navTop.appendChild(projectsDiv);
 
   // add task button
   const addTaskBtn = document.createElement("button");
@@ -372,8 +374,18 @@ function createNav() {
   });
   addTaskBtn.classList.add("add-button");
   addTaskBtn.textContent = "+";
-  nav.appendChild(addTaskBtn);
+  navTop.appendChild(addTaskBtn);
+  nav.appendChild(navTop);
 
+  //footer
+  const footer = document.createElement("div");
+  const footerA = document.createElement("a");
+  footerA.textContent = "Created by Shannqa";
+  footerA.setAttribute("href", "https://shannqa.github.io/homepage/");
+  footer.classList.add("footer");
+  footer.appendChild(footerA);
+  navBottom.appendChild(footer);
+  nav.appendChild(navBottom);
   body.appendChild(nav);
 }
 
