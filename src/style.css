@@ -119,8 +119,34 @@ button {
 
 /* Task table */
 
+.container-menu {
+  display: flex;
+  align-items: center;
+}
+
+.project-edit {
+  height: 1.2rem;
+  padding: 5px;
+  transition: background-color 300ms ease-in-out;
+}
+.project-edit:hover {
+  cursor: pointer;
+  background-color: orange;
+}
+
+.project-delete {
+  height: 1.2rem;
+  padding: 5px;
+  transition: background-color 300ms ease-in-out;
+}
+
+.project-delete:hover {
+  cursor: pointer;
+  background-color: orange;
+}
+
 .tablelabel {
-  margin: 1rem 0;
+  margin: 1rem 0.5rem 1rem 0;
   font-size: 1.2rem;
   font-weight: bold;
   text-decoration: underline;

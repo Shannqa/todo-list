@@ -12,8 +12,6 @@ export { renderTasks, closeModal };
 //to do:
 //footer
 //change the font
-//removing projects
-//render a list of tasks for all projects
 //date should be required, set up default date for today. add constraint validation
 //mobile view
 //get data from a cookie
@@ -397,9 +395,12 @@ function renderTasks(tasklist) {
 
   const tableDiv = document.querySelector(".tableDiv");
   removeTable();
+  const containerMenu = document.createElement("div");
+  containerMenu.classList.add("container-menu");
   const containerLabel = document.createElement("div");
   containerLabel.setAttribute("class", "tablelabel");
-
+  containerMenu.appendChild(containerLabel);
+  tableDiv.appendChild(containerMenu);
   let list;
   
 
@@ -413,11 +414,19 @@ function renderTasks(tasklist) {
     containerLabel.textContent = "All tasks";
     list = allTasks;
   } else {
-    //rendering list of tasks for a projecta project
+    //rendering list of tasks for a project
     containerLabel.textContent = tasklist;
-    list = allTasks.filter((task) => task.project == tasklist)
+    list = allTasks.filter((task) => task.project == tasklist);
+    const containerButtons = document.createElement("div");
+    const deleteImg = new Image();
+    deleteImg.src = deleteIcon;
+    deleteImg.classList.add("project-delete");
+    deleteImg.addEventListener("click", () => {
+      deleteProject(tasklist);
+    })
+    containerButtons.appendChild(deleteImg);
+    containerMenu.appendChild(containerButtons);
   }
-
 
   //sorting the tasks by due date
   list.sort((a, b) => {
@@ -555,7 +564,7 @@ function renderTasks(tasklist) {
   });
 
 
-    tableDiv.appendChild(containerLabel);
+    tableDiv.appendChild(containerMenu);
     tableDiv.appendChild(container);
 }
 
@@ -587,4 +596,28 @@ function renderProjNav() {
   };
 }
 
+function deleteProject(projectName) {
+  if (projectName == "Default") {
+    alert("Sorry, you can't delete the Default project.");
+    return;
+  } else {
+    if (confirm(`Are you sure? 
+All tasks belonging to this project will be assigned to the Default project.`) == true) {
+      let searchedProject = projects.findIndex((project) => project.name == projectName);
+      projects.splice(searchedProject, 1);
 
+      let list = allTasks.filter((task) => task.project == projectName);
+      list.forEach((task) => {
+        task.project = "Default";
+      }); 
+
+      checkTasks();
+      renderProjNav();
+      renderTasks("open");
+      console.log(projects);
+    } else {
+      return;
+    }
+  }
+
+}

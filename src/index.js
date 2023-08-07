@@ -163,5 +163,4 @@ const work1Task = new Task(
   "Work"
 );
 
-// allTasks.push(defaultTask);
 createDom();
