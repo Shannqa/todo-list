@@ -49,7 +49,15 @@ function createModal() {
 
   const modalLabel = document.createElement("div");
   modalLabel.textContent = "Add a Task";
-  modalLabel.addEventListener("click", showModal)
+  modalLabel.addEventListener("click", () => {
+    if (modalLabel.textContent == "Edit a Task") {
+      //if the user's editing a task, they won't re-create the modal window by clicking on "edit task" label
+      return;
+    } else {
+      showModal();
+    }
+
+  });
   modalLabel.classList.add("modal-label");
   modalTopLeft.appendChild(modalLabel);
 
@@ -226,7 +234,7 @@ function showModal(taskID) {
   modalProjLabel.classList.remove("modal-label-active");
   modalLabel.classList.remove("modal-label-inactive");
   modalProjLabel.classList.add("modal-label-inactive");
-  modal.style.display = "grid";
+  modal.style.display = "grid"; 
   form.style.display = "grid";
   const projectForm = document.querySelector("#project-form");
   projectForm.style.display = "none";
@@ -240,7 +248,9 @@ function showModal(taskID) {
 
 function renderEmptyTask() {
   let modalLabel = document.querySelector(".modal-label")
-  modalLabel.textContent = "Add a Task"
+  modalLabel.textContent = "Add a Task";
+  const modalProjLabel = document.querySelector(".modal-proj-label");
+  modalProjLabel.style.display = "block";
 }
 
 function renderEditedTask(id) {
@@ -253,8 +263,12 @@ function renderEditedTask(id) {
     let project = document.getElementById("project");
     let done = document.getElementById("done");
     let notes = document.getElementById("notes");
-    let modalLabel = document.querySelector(".modal-label")
+    
+    let modalLabel = document.querySelector(".modal-label");
     modalLabel.textContent = "Edit a Task"
+    const modalProjLabel = document.querySelector(".modal-proj-label");
+    modalProjLabel.style.display = "none";
+
     title.value = searchedTask.title;
     description.value = searchedTask.description;
     dueDate.value = searchedTask.dueDate;
