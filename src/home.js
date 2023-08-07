@@ -12,9 +12,11 @@ export { renderTasks, closeModal };
 //to do:
 //footer
 //change the font
-//adding/removing projects. might add add project to the add task modal
+//removing projects
+//render a list of tasks for all projects
 //date should be required, set up default date for today. add constraint validation
 //mobile view
+//get data from a cookie
 
 
 const body = document.querySelector("body");
@@ -22,20 +24,17 @@ let editedTask = null;
 let currentView = "open";
 
 export default function createDom() {
-  createHeader();
-  createNav();
-  renderProjNav();
-
-  const main = document.createElement("div");
+    const main = document.createElement("div");
   main.classList.add("main");
-
-  createModal()
-
+  createHeader();
+  createNav();  
   const tableDiv = document.createElement("div");
   tableDiv.classList.add("tableDiv");
-
   main.appendChild(tableDiv);
   body.appendChild(main);
+  renderProjNav();
+  createModal()
+
   renderTasks(currentView);
 }
 
@@ -402,6 +401,8 @@ function renderTasks(tasklist) {
   containerLabel.setAttribute("class", "tablelabel");
 
   let list;
+  
+
   if (tasklist === "open") {
     containerLabel.textContent = "Open tasks";
     list = allTasks.filter((task) => task.done === "false" || task.done === false);
@@ -411,7 +412,12 @@ function renderTasks(tasklist) {
   } else if (tasklist === "all") {
     containerLabel.textContent = "All tasks";
     list = allTasks;
+  } else {
+    //rendering list of tasks for a projecta project
+    containerLabel.textContent = tasklist;
+    list = allTasks.filter((task) => task.project == tasklist)
   }
+
 
   //sorting the tasks by due date
   list.sort((a, b) => {
@@ -557,6 +563,7 @@ function renderProjNav() {
     const projUl = document.querySelector(".projects-nav");
   while (projUl.lastChild) {
     projUl.removeChild(projUl.lastChild);
+    
   }
 
   const projectsIcon = new Image();
@@ -566,6 +573,12 @@ function renderProjNav() {
   for (let i = 0; i < projects.length; i++) {
     const projD = document.createElement("div");
     const projS = document.createElement("span");
+    let listName = `${projects[i].name}`;
+    console.log(listName);
+    projS.addEventListener("click", () => {
+      renderTasks(listName);
+    });
+
     projD.classList.add("project-nav");
     projS.textContent = `${projects[i].name}`;
     projD.appendChild(projectsIcon.cloneNode());

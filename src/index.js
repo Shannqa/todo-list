@@ -26,6 +26,7 @@ class Task {
     this.done = done;
     this.notes = notes;
     this.project = project;
+    allTasks.push(this);
   }
 }
 
@@ -102,21 +103,65 @@ const defaultProject = new Project(
   "Default"
 );
 
-// projects.push(defaultProject);
+const workProject = new Project(
+  "Work"
+);
 
-// addProject("Default");
-// addProject("Work");
-// addProject("Bob");
+const tripsProject = new Project(
+  "Trips"
+);
 
-const defaultTask = new Task(
-  "brush teeth",
-  "brush your teeth",
-  "2023-07-07",
-  "High",
-  "false",
-  "no",
+
+const default1Task = new Task(
+  "Doctor's appointment",
+  "The appointment starts at 13, be there 30 mins before that.",
+  "2023-08-07",
+  "Medium",
+  "true",
+  "Have my recent lab results with me.",
   "Default"
 );
 
-allTasks.push(defaultTask);
+const default2Task = new Task(
+  "Buy some veggies",
+  "Maybe some tomatoes, carrots and brussel sprouts.",
+  "2023-08-09",
+  "Low",
+  "false",
+  "",
+  "Default"
+);
+
+const trip1Task = new Task(
+  "Flight to Australia",
+  "Be at the gate by 11, the plane leaves at 12:30.",
+  "2023-08-30",
+  "High",
+  "false",
+  "Don't forget to take the passport!",
+  "Trips"
+);
+
+
+const trip2Task = new Task(
+  "Flight back home",
+  "Be at the gate by 17, the plane leaves at 18:15.",
+  "2023-09-15",
+  "High",
+  "false",
+  "Make sure to have enough water for the flight.",
+  "Trips"
+);
+
+const work1Task = new Task(
+  "Finish the ToDo website!",
+  "Still plenty to do! Most form fields should be required, the font needs a change.",
+  "2023-08-17",
+  "Medium",
+  "false",
+  "",
+  "Work"
+);
+
+// allTasks.push(defaultTask);
 createDom();
