@@ -89,6 +89,7 @@ function createModal() {
   const inputTitle = document.createElement("input");
   inputTitle.setAttribute("id", "title");
   inputTitle.setAttribute("required", "");
+  inputTitle.setAttribute("maxlength", "60");
   const labelTitle = document.createElement("label");
   labelTitle.setAttribute("for", "title");
   labelTitle.textContent = "Title:";
@@ -100,8 +101,6 @@ function createModal() {
   inputDue.setAttribute("id", "dueDate");
   inputDue.setAttribute("type", "date");
   inputDue.setAttribute("required", "");
-  //default due date - today
-  inputDue.defaultValue = format(new Date(), "yyyy-MM-dd");
   const labelDue = document.createElement("label");
   labelDue.setAttribute("for", "dueDate");
   labelDue.textContent = "Due Date:";
@@ -178,6 +177,11 @@ function createModal() {
   const submitBtn = document.createElement("button");
   submitBtn.classList.add("submit-button");
   submitBtn.addEventListener("click", (event) => {
+    //check if the task's form is valid
+    if (!form.checkValidity()) {
+      return;
+    };
+
     if (editedTask == null) {
       addTask();
     } else {
@@ -200,6 +204,8 @@ function createModal() {
 
   const inputNewProject = document.createElement("input");
   inputNewProject.setAttribute("id", "newProjectName");
+  inputNewProject.setAttribute("required", "");
+  inputNewProject.setAttribute("maxlength", "20");
   const labelNewProject = document.createElement("label");
   labelNewProject.setAttribute("for", "newProjectName");
   labelNewProject.textContent = "Project's Name:";
@@ -209,6 +215,10 @@ function createModal() {
   const submitProjBtn = document.createElement("button");
   submitProjBtn.classList.add("submit-button");
   submitProjBtn.addEventListener("click", (event) => {
+    //check if the task's form is valid
+    if (!projectForm.checkValidity()) {
+      return;
+    };
   addProject();
   renderProjNav();
   closeModal();
@@ -261,10 +271,13 @@ function showModal(taskID) {
 }
 
 function renderEmptyTask() {
-  let modalLabel = document.querySelector(".modal-label")
+  const modalLabel = document.querySelector(".modal-label")
   modalLabel.textContent = "Add a Task";
   const modalProjLabel = document.querySelector(".modal-proj-label");
   modalProjLabel.style.display = "block";
+  // //default due date - today
+  let dueDate = document.getElementById("dueDate");
+  dueDate.value = format(new Date(), "yyyy-MM-dd");
 }
 
 function renderEditedTask(id) {
@@ -416,7 +429,7 @@ function closeModal() {
   let newProjectName = document.getElementById("newProjectName");
   title.value = "";
   description.value = "";
-  dueDate.value = "";
+  // dueDate.value = ""; - not needed, we're getting today's date in rendering task function
   project.value = "Default";
   done.checked = false;
   notes.value = "";
