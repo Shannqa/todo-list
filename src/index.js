@@ -83,8 +83,6 @@ function addTask() {
     project.value
   );
   console.log(newTask);
-
-  allTasks.push(newTask);
 }
 
 function checkTasks() {
