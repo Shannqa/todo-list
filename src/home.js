@@ -15,6 +15,7 @@ export { renderTasks, closeModal };
 //mobile view
 //get data from a cookie
 //fix issues with divs changing sizes depending on the content
+//bug: adding a task creates 2 tasks instead of 1
 
 
 const body = document.querySelector("body");
@@ -87,6 +88,7 @@ function createModal() {
   //title
   const inputTitle = document.createElement("input");
   inputTitle.setAttribute("id", "title");
+  inputTitle.setAttribute("required", "");
   const labelTitle = document.createElement("label");
   labelTitle.setAttribute("for", "title");
   labelTitle.textContent = "Title:";
@@ -97,6 +99,9 @@ function createModal() {
   const inputDue = document.createElement("input");
   inputDue.setAttribute("id", "dueDate");
   inputDue.setAttribute("type", "date");
+  inputDue.setAttribute("required", "");
+  //default due date - today
+  inputDue.defaultValue = format(new Date(), "yyyy-MM-dd");
   const labelDue = document.createElement("label");
   labelDue.setAttribute("for", "dueDate");
   labelDue.textContent = "Due Date:";
@@ -115,12 +120,17 @@ function createModal() {
   //priority
   const selectPriority = document.createElement("select");
   selectPriority.setAttribute("id", "priority");
-  priorities.forEach ((elem) => {
+    priorities.forEach ((elem) => {
     let option = document.createElement("option");
     option.value = elem;
     option.textContent = elem;
+    //medium priority is the default
+    if (elem == "Medium") {
+      option.setAttribute("selected", "");
+    }
     selectPriority.appendChild(option);
   });
+  selectPriority.defaultValue = "Medium";
   const labelPriority = document.createElement("label");
   labelPriority.setAttribute("for", "priority");
   labelPriority.textContent = "Priority:";
@@ -224,6 +234,8 @@ function renderNewProject() {
   modalProjLabel.classList.remove("modal-label-inactive");
   const projectForm = document.querySelector("#project-form");
   projectForm.style.display = "grid";
+  const inputNewProject = document.querySelector("#newProjectName");
+  inputNewProject.focus();
 }
  
 function showModal(taskID) {
@@ -244,6 +256,8 @@ function showModal(taskID) {
   } else {
     renderEmptyTask();
   }
+  const inputTitle = document.querySelector("#title");
+  inputTitle.focus();
 }
 
 function renderEmptyTask() {
