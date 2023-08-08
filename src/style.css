@@ -22,7 +22,7 @@ body {
   margin: 0;
   grid-template-rows: 4rem 1fr;
   grid-template-columns: auto 1fr;
-  font-size: 1.2rem;
+  font-size: 1.125;
   height: 100vh;
   }
 
@@ -34,6 +34,8 @@ body {
   font-weight: bold;
 }
 
+/* navigation */
+
 .navigation {
   grid-area: nav;
   display: flex;
@@ -44,9 +46,22 @@ body {
   padding: 0.5rem 1.5rem 0.5rem 0.5rem;
 }
 
+.views-nav-label,
+.projects-nav-label {
+  margin-top: 0.625rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.25rem;
+}
+
 .navigation img {
-  width: 18px;
+  width: 1rem;
   margin-right: 0.5rem;
+}
+
+.navigation span {
+  font-size: 1.188rem;
 }
 
 .navigation span:hover {
@@ -59,36 +74,12 @@ body {
   cursor: pointer;
 }
 
-.projects-nav-label {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.views-nav-label {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.project-nav:hover {
-  color: orange;
-  cursor: pointer;
-}
-
-.project-nav:active {
-  color: red;
-  cursor: pointer;
-}
-
-
 .footer {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
-.footer a, .footer a:visited {
+.footer a, 
+.footer a:visited {
   color: black;
 }
 
@@ -100,18 +91,11 @@ body {
   color: red;
 }
 
-.main {
-  grid-area: main;
-  margin-left: 2rem;
-}
-
-/* #form {
-  display: flex;
-  flex-direction: column;
-} */
+/* modal window */
 
 input {
   width: 200px;
+  height: 25px;
 }
 
 input:invalid {
@@ -140,8 +124,125 @@ button {
   background-color: orange;
 }
 
+.add-button:active {
+  background-color: red;
+}
 
-/* Task table */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 30%;
+  top: 10%;
+  padding: 20px 30px;
+  background-color: rgb(249 251 228);;
+  box-shadow: 5px 5px 5px #6c6767;
+}
+
+.modal-top {
+  grid-column: 1 / 3;
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr;
+}
+
+.modal-top-left {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px white solid;
+  padding: 5px;
+}
+
+.modal-proj-label {
+  padding: 5px;
+  transition: background-color 300ms ease-in-out;
+}
+
+.modal-label {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding: 5px;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.modal-label-active {
+  font-weight: bold;
+  background-color: rgb(255 235 108);
+}
+
+.modal-label-inactive {
+  background-color: rgba(255, 235, 108, 0.45);
+}
+
+.modal-label-inactive:hover {
+  background-color: orange;
+  cursor: pointer;
+}
+
+#form {  
+  display: grid;
+  grid-column: 1 / 3;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+}
+
+#form div {
+  display: grid;
+}
+
+#description, #notes {
+  width: 200px;
+  height: 100px;
+}
+
+.close-btn {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  height: 20px;
+  width: 20px;
+  background-color: rgb(255 235 108);
+  padding: 0px;
+  border: none;
+  font-weight: bold;
+  transition: background-color 300ms ease-in-out;
+  box-shadow: 3px 3px 3px #6c6767;
+}
+
+.submit-button {
+  margin: 0 auto;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  grid-column: 1 / 3;
+  background-color: rgb(255 235 108);
+  border: none;
+  transition: background-color 300ms ease-in-out;
+  box-shadow: 3px 3px 3px #6c6767;
+  cursor: pointer
+}
+
+.close-btn:hover, 
+.submit-button:hover {
+  background-color: orange;
+}
+
+#project-form {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width: 534px;
+}
+
+#newProjectName {
+  grid-row: 2 / 3;
+  margin-bottom: 8px;
+}
+
+/* main - list of tasks */
+
+.main {
+  grid-area: main;
+  margin-left: 2rem;
+}
 
 .container-menu {
   display: flex;
@@ -204,6 +305,7 @@ button {
   background-color: orange;
   cursor: pointer;
 }
+
 .task-date {
   padding: 5px 5px 10px 5px;
 }
@@ -217,11 +319,6 @@ button {
 
 .task-title:hover {
   background-color: orange;
-
-}
-
-.task-date {
-  padding: 5px;
 }
 
 .task-done {
@@ -248,7 +345,6 @@ button {
   color: orange;
   border: 2px solid orange;
   border-radius: 10px;
-
 }
 
 .task-priority-low {
@@ -257,22 +353,14 @@ button {
   border-radius: 10px;
 }
 
-.task-edit img {
-  height: 1.2rem;
-  padding: 5px;
-  transition: background-color 300ms ease-in-out;
-}
-.task-edit img:hover {
-  cursor: pointer;
-  background-color: orange;
-}
-
+.task-edit img,
 .task-delete img {
   height: 1.2rem;
   padding: 5px;
   transition: background-color 300ms ease-in-out;
 }
 
+.task-edit img:hover,
 .task-delete img:hover {
   cursor: pointer;
   background-color: orange;
@@ -289,124 +377,4 @@ button {
 
 .details-row-hidden {
   display: none;
-}
-
-/* Modal window */
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 30%;
-  top: 10%;
-  padding: 20px 30px;
-  background-color: rgb(249 251 228);;
-  box-shadow: 5px 5px 5px #6c6767;
-}
-
-.modal-top {
-  grid-column: 1 / 3;
-  display: grid;
-  justify-content: space-between;
-  grid-template-columns: 1fr 1fr;
-}
-
-.modal-top-left {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border: 1px white solid;
-  padding: 5px;
-}
-
-.modal-proj-label {
-
-  padding: 5px;
-  transition: background-color 300ms ease-in-out;
-}
-
-.modal-label {
-
-  padding: 5px;
-}
-
-#form {  
-  display:grid;
-  grid-column: 1 / 3;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 2rem;
-}
-
-#form div {
-  display: grid;
-}
-
-.modal label {
-  margin-top: 3px;
-  margin-bottom: 3px;
-}
-
-#description, #notes {
-  width: 200px;
-  height: 100px;
-}
-
-.modal-label {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  /* font-weight: bold; */
-}
-
-.modal-label-active {
-  font-weight: bold;
-  background-color: rgb(255 235 108);
-}
-
-.modal-label-inactive {
-  background-color: rgba(255, 235, 108, 0.45);
-}
-
-.modal-label-inactive:hover {
-  background-color: orange;
-  cursor: pointer;
-}
-
-.close-btn {
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
-  height: 20px;
-  width: 20px;
-  background-color: rgb(255 235 108);
-  padding: 0px;
-  border: none;
-  font-weight: bold;
-  transition: background-color 300ms ease-in-out;
-  box-shadow: 3px 3px 3px #6c6767;
-}
-
-.submit-button {
-  margin: 0 auto;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  grid-column: 1 / 3;
-  background-color: rgb(255 235 108);
-  border: none;
-  transition: background-color 300ms ease-in-out;
-  box-shadow: 3px 3px 3px #6c6767;
-  cursor: pointer
-  
-}
-
-.close-btn:hover, .submit-button:hover {
-  background-color: orange;
-}
-
-#project-form {
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  width: 534px;
-}
-
-#newProjectName {
-  grid-row: 2 / 3;
-  margin-bottom: 8px;
 }

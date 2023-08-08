@@ -11,11 +11,10 @@ export { renderTasks, closeModal };
 
 //to do:
 //change the font
-//date should be required, set up default date for today. add constraint validation
 //mobile view
 //get data from a cookie
 //fix issues with divs changing sizes depending on the content
-//bug: adding a task creates 2 tasks instead of 1
+//modal: input gets bigger when entering text
 
 
 const body = document.querySelector("body");
