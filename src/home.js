@@ -7,6 +7,7 @@ import tasksAllImg from './tasks_all.svg';
 import tasksDoneImg from './tasks_done.svg';
 import tasksOpenImg from './tasks_open.svg';
 import projectsImg from './projects_icon.svg';
+import logoImg from './done.png';
 export { renderTasks, closeModal };
 
 //to do:
@@ -335,7 +336,12 @@ function deleteTask(taskID) {
 function createHeader() {
   const header = document.createElement("div");
   header.classList.add("header");
-  header.textContent = "To Do List";
+  const logo = new Image();
+  logo.src = logoImg;
+  header.appendChild(logo);
+  const headerS = document.createElement("div");
+  headerS.textContent = "To Do List";
+  header.appendChild(headerS);
   body.appendChild(header);
 }
 

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
+
 :root {
   --background: #fff;
   /* --background2: ;
@@ -29,11 +31,20 @@ body {
 .header {
   grid-area: header;
   background-color: rgb(255 235 108);
-  padding: 1rem;
-  font-size: 1.8rem;
-  font-weight: bold;
+  padding: 0.5rem;  
+  display: flex;
+  align-items: center;
 }
 
+.header img {
+  height: 2rem;
+  margin-right: 0.25rem;
+}
+.header div {
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: 'Yatra One', cursive;
+}
 /* navigation */
 
 .navigation {
