@@ -1,6 +1,6 @@
 // import { formatDuration } from "date-fns";
 import { compareAsc, format } from "date-fns";
-import { allTasks, projects, priorities, addTask, checkTasks, addProject } from ".";
+import { allTasks, projects, priorities, addTask, checkTasks, addProject, setStorageProjects, setStorageTasks } from ".";
 import editIcon from './edit_icon.svg';
 import deleteIcon from './delete_icon.svg';
 import tasksAllImg from './tasks_all.svg';
@@ -8,10 +8,9 @@ import tasksDoneImg from './tasks_done.svg';
 import tasksOpenImg from './tasks_open.svg';
 import projectsImg from './projects_icon.svg';
 import logoImg from './done.png';
-export { renderTasks, closeModal };
+export { renderTasks, closeModal, createDom };
 
 //to do:
-//change the font
 //mobile view
 //get data from a cookie
 //fix issues with divs changing sizes depending on the content
@@ -22,8 +21,10 @@ const body = document.querySelector("body");
 let editedTask = null;
 let currentView = "open";
 
+//DOM
+
 export default function createDom() {
-    const main = document.createElement("div");
+  const main = document.createElement("div");
   main.classList.add("main");
   createHeader();
   createNav();  
@@ -141,8 +142,8 @@ function createModal() {
   selectProject.setAttribute("id", "project");
   projects.forEach ((elem) => {
     let projOption = document.createElement("option");
-    projOption.value = elem.name;
-    projOption.textContent = elem.name;
+    projOption.value = elem._name;
+    projOption.textContent = elem._name;
     selectProject.appendChild(projOption);
   });
   const labelProject = document.createElement("label");
@@ -323,6 +324,8 @@ function editTask() {
   editedTask.notes = notes.value;
   
   editedTask = null;
+  setStorageProjects();
+  setStorageTasks();  
 }
 
 // delete task
@@ -331,6 +334,8 @@ function deleteTask(taskID) {
   allTasks.splice(searchedTaskID, 1);
   checkTasks();
   renderTasks("open");
+  setStorageProjects();
+  setStorageTasks();  
 }
 
 function createHeader() {
@@ -519,6 +524,8 @@ function renderTasks(tasklist) {
         taskRow.classList.remove("task-done");
       }
       checkTasks();
+      setStorageProjects();
+      setStorageTasks();  
     });
     if (item.done == true) {
       doneCheck.checked = true;
@@ -630,24 +637,23 @@ function renderProjNav() {
     const projUl = document.querySelector(".projects-nav");
   while (projUl.lastChild) {
     projUl.removeChild(projUl.lastChild);
-    
   }
 
   const projectsIcon = new Image();
   projectsIcon.src = projectsImg;
 
-
   for (let i = 0; i < projects.length; i++) {
     const projD = document.createElement("div");
     const projS = document.createElement("span");
-    let listName = `${projects[i].name}`;
+    let listName = `${projects[i]._name}`;
     console.log(listName);
+
     projS.addEventListener("click", () => {
       renderTasks(listName);
     });
 
     projD.classList.add("project-nav");
-    projS.textContent = `${projects[i].name}`;
+    projS.textContent = `${projects[i]._name}`;
     projD.appendChild(projectsIcon.cloneNode());
     projD.appendChild(projS);
     projUl.appendChild(projD);
@@ -661,7 +667,7 @@ function deleteProject(projectName) {
   } else {
     if (confirm(`Are you sure? 
 All tasks belonging to this project will be assigned to the Default project.`) == true) {
-      let searchedProject = projects.findIndex((project) => project.name == projectName);
+      let searchedProject = projects.findIndex((project) => project._name == projectName);
       projects.splice(searchedProject, 1);
 
       let list = allTasks.filter((task) => task.project == projectName);
@@ -673,9 +679,13 @@ All tasks belonging to this project will be assigned to the Default project.`) =
       renderProjNav();
       renderTasks("open");
       console.log(projects);
+      setStorageProjects();
+      setStorageTasks();  
     } else {
       return;
     }
   }
 
 }
+
+

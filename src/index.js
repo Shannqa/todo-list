@@ -2,12 +2,13 @@
 
 import createDom from "./home";
 import "./style.css";
-export { allTasks, projects, priorities, addTask, checkTasks, addProject };
+export { allTasks, projects, priorities, addTask, checkTasks, addProject, setStorageProjects, setStorageTasks };
 
-const allTasks = [];
-const projects = [];
+const allTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const projects = JSON.parse(localStorage.getItem("projects")) || [];
 const priorities = ["High", "Medium", "Low"];
 
+/* Tasks */
 class Task {
   constructor(
     title,
@@ -27,6 +28,7 @@ class Task {
     this.notes = notes;
     this.project = project;
     allTasks.push(this);
+
   }
 }
 
@@ -83,6 +85,8 @@ function addTask() {
     project.value
   );
   console.log(newTask);
+  setStorageProjects();
+  setStorageTasks();  
 }
 
 function checkTasks() {
@@ -90,75 +94,95 @@ function checkTasks() {
   let open = allTasks.filter((task) => task.done === "false" || task.done === false);
 }
 
+//localstorage
+
+function setStorageTasks() {
+  localStorage.setItem("tasks", JSON.stringify(allTasks));
+}
+function setStorageProjects() {
+  localStorage.setItem("projects", JSON.stringify(projects));  
+}
 
 function addProject() {
   const form = document.querySelector("#project-form");
   let newProject = new Project(newProjectName.value);
   console.log(newProject);
+  setStorageProjects();
+  setStorageTasks();  
 }
 
-const defaultProject = new Project(
-  "Default"
-);
+function addDefaultProjects() {
+  const defaultProject = new Project(
+    "Default"
+  );
+  const workProject = new Project(
+    "Work"
+  );
+  const tripsProject = new Project(
+    "Trips"
+  );
+}
 
-const workProject = new Project(
-  "Work"
-);
+function addDefaultTasks() {
+  const default1Task = new Task(
+    "Doctor's appointment",
+    "The appointment starts at 13, be there 30 mins before that.",
+    "2023-08-07",
+    "Medium",
+    "true",
+    "Have my recent lab results with me.",
+    "Default"
+  );
+  
+  const default2Task = new Task(
+    "Buy some veggies",
+    "Maybe some tomatoes, carrots and brussel sprouts.",
+    "2023-08-09",
+    "Low",
+    "false",
+    "",
+    "Default"
+  );
+  
+  const trip1Task = new Task(
+    "Flight to Australia",
+    "Be at the gate by 11, the plane leaves at 12:30.",
+    "2023-08-30",
+    "High",
+    "false",
+    "Don't forget to take the passport!",
+    "Trips"
+  );
+  
+  
+  const trip2Task = new Task(
+    "Flight back home",
+    "Be at the gate by 17, the plane leaves at 18:15.",
+    "2023-09-15",
+    "High",
+    "false",
+    "Make sure to have enough water for the flight.",
+    "Trips"
+  );
+  
+  const work1Task = new Task(
+    "Finish the ToDo website!",
+    "Still plenty to do! Most form fields should be required, the font needs a change.",
+    "2023-08-17",
+    "Medium",
+    "false",
+    "",
+    "Work"
+  );
+}
 
-const tripsProject = new Project(
-  "Trips"
-);
+if (!localStorage.getItem("tasks")) {
+  addDefaultTasks();
+  setStorageTasks();
+}
 
-
-const default1Task = new Task(
-  "Doctor's appointment",
-  "The appointment starts at 13, be there 30 mins before that.",
-  "2023-08-07",
-  "Medium",
-  "true",
-  "Have my recent lab results with me.",
-  "Default"
-);
-
-const default2Task = new Task(
-  "Buy some veggies",
-  "Maybe some tomatoes, carrots and brussel sprouts.",
-  "2023-08-09",
-  "Low",
-  "false",
-  "",
-  "Default"
-);
-
-const trip1Task = new Task(
-  "Flight to Australia",
-  "Be at the gate by 11, the plane leaves at 12:30.",
-  "2023-08-30",
-  "High",
-  "false",
-  "Don't forget to take the passport!",
-  "Trips"
-);
-
-
-const trip2Task = new Task(
-  "Flight back home",
-  "Be at the gate by 17, the plane leaves at 18:15.",
-  "2023-09-15",
-  "High",
-  "false",
-  "Make sure to have enough water for the flight.",
-  "Trips"
-);
-
-const work1Task = new Task(
-  "Finish the ToDo website!",
-  "Still plenty to do! Most form fields should be required, the font needs a change.",
-  "2023-08-17",
-  "Medium",
-  "false",
-  "",
-  "Work"
-);
-
+if (!localStorage.getItem("projects")) {
+  addDefaultProjects();
+  setStorageProjects();
+}
 createDom();
