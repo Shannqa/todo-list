@@ -202,6 +202,7 @@ function createModal() {
   //project's form
   const projectForm = document.createElement("form");
   projectForm.setAttribute("id", "project-form");
+  const projectFormDiv = document.createElement("div");
 
   const inputNewProject = document.createElement("input");
   inputNewProject.setAttribute("id", "newProjectName");
@@ -210,8 +211,8 @@ function createModal() {
   const labelNewProject = document.createElement("label");
   labelNewProject.setAttribute("for", "newProjectName");
   labelNewProject.textContent = "Project's Name:";
-  projectForm.appendChild(labelNewProject);
-  projectForm.appendChild(inputNewProject);
+  projectFormDiv.appendChild(labelNewProject);
+  projectFormDiv.appendChild(inputNewProject);
 
   const submitProjBtn = document.createElement("button");
   submitProjBtn.classList.add("submit-button");
@@ -227,9 +228,9 @@ function createModal() {
   });
   submitProjBtn.setAttribute("id", "submitProj");
   submitProjBtn.textContent = "Submit";
- 
-  projectForm.appendChild(submitProjBtn);
 
+  projectForm.appendChild(projectFormDiv);
+  projectForm.appendChild(submitProjBtn);
   modalWindow.appendChild(projectForm);
   body.appendChild(modalWindow);
 }

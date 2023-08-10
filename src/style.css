@@ -40,6 +40,7 @@ body {
   height: 2rem;
   margin-right: 0.25rem;
 }
+
 .header div {
   font-size: 1.8rem;
   font-weight: bold;
@@ -104,9 +105,10 @@ body {
 
 /* modal window */
 
-input {
+input, select {
   width: 200px;
-  height: 25px;
+  height: 22px;
+  margin-bottom: 4px;
 }
 
 input:invalid {
@@ -139,15 +141,19 @@ button {
   background-color: red;
 }
 
+/* Modal window */
 .modal {
   display: none;
   position: fixed;
   z-index: 1;
   left: 30%;
   top: 10%;
-  padding: 20px 30px;
+  padding: 10px 30px;
   background-color: rgb(249 251 228);;
   box-shadow: 5px 5px 5px #6c6767;
+  width: 460px;
+  justify-content: center;
+  justify-items: center;
 }
 
 .modal-top {
@@ -160,13 +166,16 @@ button {
 .modal-top-left {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border: 1px white solid;
   padding: 5px;
 }
 
 .modal-proj-label {
+  margin-top: 3px;
+  margin-bottom: 3px;
   padding: 5px;
   transition: background-color 300ms ease-in-out;
+  width: max-content;
+
 }
 
 .modal-label {
@@ -175,6 +184,7 @@ button {
   padding: 5px;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
+  width: max-content;
 }
 
 .modal-label-active {
@@ -198,26 +208,28 @@ button {
   column-gap: 2rem;
 }
 
-#form div {
+#form div, #project-form div {
   display: grid;
 }
 
 #description, #notes {
   width: 200px;
   height: 100px;
+  margin-bottom: 4px;
 }
 
 .close-btn {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   background-color: rgb(255 235 108);
   padding: 0px;
   border: none;
   font-weight: bold;
   transition: background-color 300ms ease-in-out;
   box-shadow: 3px 3px 3px #6c6767;
+  cursor: pointer;
 }
 
 .submit-button {
@@ -229,7 +241,9 @@ button {
   border: none;
   transition: background-color 300ms ease-in-out;
   box-shadow: 3px 3px 3px #6c6767;
-  cursor: pointer
+  cursor: pointer;
+  padding: 5px;
+  font-weight: bold;
 }
 
 .close-btn:hover, 
@@ -239,8 +253,8 @@ button {
 
 #project-form {
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  width: 534px;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
 }
 
 #newProjectName {
